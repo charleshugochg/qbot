@@ -1,0 +1,23 @@
+{% extends "mainapp/base.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block body %}
+    <h1>Register</h1>
+    {{ user.username }}
+    <form action="{% url  'register' %}" method="POST">
+        {% csrf_token %}
+        User Name:
+        <input name="username" type="text"/>
+        Email:
+        <input name="email" type="email"/>
+        <br>Password:
+        <input name="password" type="password"/>
+        <input type="submit" value="Register"/>
+    </form>
+    <div>
+        {{ message }}
+    </div>
+{% endblock %}

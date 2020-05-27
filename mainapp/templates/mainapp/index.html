@@ -1,0 +1,21 @@
+{% extends "mainapp/base.html" %}
+
+{% block title %}
+    Queue App
+{% endblock %}
+
+{% block body %}
+    <h1>APP NAME</h1>
+    <p>Welcome to our app.</p>
+    
+    {% if not user.username %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    {% else %}
+		<p>USER: {{ user.username }}</p>
+		<form action="{% url  'logout' %}" method="POST">
+			{% csrf_token %}
+			<input type="submit" value="Logout"/>
+		</form>
+    {% endif %}
+{% endblock %}
