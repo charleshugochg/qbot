@@ -15,8 +15,7 @@ def index(request):
             login(request, user)
             return HttpResponseRedirect(reverse('index'))
         else:
-            message = "Invalid credentials."
-            return HttpResponseRedirect(reverse('login'))
+            return render(request, "mainapp/login.html", {"message": "Invalid credentials."})
 
     if not request.user.is_authenticated:
         return render(request, "mainapp/index.html", {"message": None})
@@ -39,10 +38,14 @@ def register_view(request):
         username = request.POST["username"]
         email = request.POST["email"]
         password = request.POST["password"]
-        user = User.objects.create_user(username, email, password)
-        if user is not None:
+        
+        # TODO: add some verifications here.
+        if username and email and password:
+            user = User.objects.create_user(username, email, password)
             user.save()
             context = {"message": "Account creation success!"}
+        else:
+            context = {"message": "Invalid credentials."}
 
     return render(request, "mainapp/register.html", context)
 
