@@ -4,17 +4,20 @@ from django.contrib.auth.models import User
 
 # Created by DEV-B.
 
-# TODO:
-# Name-REQ
-# Email-REQ
-# User
-# Logo
-# Phone
-# Type
-# Address
-# Location
-# Capacity
+class Shop(models.Model):
+    BLANK = ''
+    INT_BLANK = 0
 
-# class Shop(models.Model):
+    name = models.CharField(max_length=128, blank=True)
+    logo = models.ImageField(upload_to='logos',default='mainapp/media/logos/default.png')
+    shop_type = models.CharField(max_length=64, blank=True)
+    capacity = models.PositiveIntegerField(default=INT_BLANK)
+    phone_number = models.CharField(max_length=12, blank=True)
+    address = models.CharField(max_length=256, blank=True)
+    # location_field, to add later
 
-#     Name = models.CharField(max_length=64)
+    # auto
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shops', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.name}"
