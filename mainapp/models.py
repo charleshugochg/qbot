@@ -9,7 +9,7 @@ class Shop(models.Model):
     INT_BLANK = 0
 
     name = models.CharField(max_length=128, blank=True)
-    logo = models.ImageField(upload_to='logos',default='mainapp/media/logos/default.png')
+    logo = models.ImageField(upload_to='mainapp/media/logos',default='mainapp/media/logos/default.png')
     shop_type = models.CharField(max_length=64, blank=True)
     capacity = models.PositiveIntegerField(default=INT_BLANK)
     phone_number = models.CharField(max_length=12, blank=True)
