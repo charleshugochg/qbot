@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+import uuid
+
 # Created by DEV-B.
 
 class Shop(models.Model):
@@ -21,3 +23,25 @@ class Shop(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+
+#############################################################################
+# Don't come down Rio
+
+class Queue(models.Model):
+    class Status(models.IntegerChoices):
+        QUEUE = 0
+        CANCEL = 1
+        ONCALL = 2
+        SERVING = 3
+        SUCCESS = 4
+
+    shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, blank=True, null=True)
+    queue_date = models.DateTimeField('datetime queue')
+    phone_number = models.CharField(max_length=12, blank=True)
+    token_id = models.UUIDField(default=uuid.uuid4, editable=False)
+    status = models.IntegerField(choices=Status.choices)
+
+    def __str__(self):
+        return f"Queue {self.id} with token {self.token_id}"
+    
