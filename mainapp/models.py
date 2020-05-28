@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 import uuid
 
@@ -37,8 +38,9 @@ class Queue(models.Model):
         SUCCESS = 4
 
     shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, blank=True, null=True)
-    queue_date = models.DateTimeField('datetime queue')
+    queue_date = models.DateTimeField('datetime queue', default=timezone.now)
     phone_number = models.CharField(max_length=12, blank=True)
+    arrival_time = models.DateTimeField('datetime arrival', null=True, default=None)
     token_id = models.UUIDField(default=uuid.uuid4, editable=False)
     status = models.IntegerField(choices=Status.choices)
 
