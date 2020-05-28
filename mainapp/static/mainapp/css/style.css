@@ -3,3 +3,37 @@
     height: 50px;
     width: auto;
 }
+
+.search-area {
+    text-align: center;
+    margin: 40px 0;
+    padding: 0 10%;
+}
+
+.search-area h2 {
+    margin-bottom: 20px;
+}
+
+.shop-section {
+    margin-bottom: 30px;
+}
+
+.shop-section h2 {
+    margin-bottom: 30px;
+}
+
+.shop-info {
+    
+}
+
+.shop-info div {
+    padding: 20px;
+    margin-bottom: 10px;
+    background-color: white;
+    border: 1px solid rgba(199, 199, 199, 0.664);
+    border-radius: 10px;
+}
+
+.shop-info h4 {
+    margin-bottom: 20px;
+}

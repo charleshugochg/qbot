@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from .models import Shop
 
 # Created by DEV-B.
 
@@ -21,10 +22,11 @@ def index(request):
         return render(request, "mainapp/index.html", {"message": None})
 
     context = {
-        "user": request.user
+        "user": request.user,
+        "shops": Shop.objects.all(),
     }
 
-    return render(request, "mainapp/index.html", {"message": context})
+    return render(request, "mainapp/index.html", context)
 
 
 def login_view(request):

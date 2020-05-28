@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light main-nav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark main-nav">
             <img src="{% static 'mainapp/images/logo.png' %}" alt="Qbot logo">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -20,13 +20,32 @@
           </nav>
 
     <div class="container-fluid">
-        <p>Welcome to our app.</p>
+        <div class="search-area">
+            <h2>Search Here</h2>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Shop name or type">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button">Find</button>
+                </div>
+            </div>
+        </div>
 
-        <div class="search-bar">
-            <input type="text" placeholder="Search..">
+        <div class="shop-section">
+            <h2>Shops</h2>
+            <div class="row">
+                {% for shop in shops %}
+                <div class="col-sm shop-info">
+                    <div>
+                        <h4>{{shop.name}}</h4>
+                        <p>Type: {{shop.shop_type}}</p>
+                        <p>Capacity: {{shop.capacity}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
         
-        {% if not user.username %}
+        <!-- {% if not user.username %}
             <a href="{% url 'login' %}">Login</a>
             <a href="{% url 'register' %}">Register</a>
         {% else %}
@@ -34,7 +53,7 @@
             <form action="{% url  'logout' %}" method="POST">
                 {% csrf_token %}
                 <input type="submit" value="Logout"/>
-            </form>
+            </form> -->
     </div>
     {% endif %}
 
