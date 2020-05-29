@@ -57,9 +57,6 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return render(request, "mainapp/index.html", {"message": "Logged out."})
-<<<<<<< HEAD
-=======
-
 
 #####################################################################
 # Don't come down Rio
@@ -141,4 +138,15 @@ def tokens_view(request):
             | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
             | Q(phone_number=phone_number, status=Queue.Status.SERVING))
     return render(request, 'mainapp/basic_list_token.html', {'token_list': queues})
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 0c6bbe9c3c9b5e5a3ac2d7e1846b2d9749e3fa7c
+
+
+
+<<<<<<< HEAD
+>>>>>>> 0c6bbe9c3c9b5e5a3ac2d7e1846b2d9749e3fa7c
+=======
 >>>>>>> 0c6bbe9c3c9b5e5a3ac2d7e1846b2d9749e3fa7c
