@@ -131,10 +131,10 @@ def cancel_view(request, shop_id):
             q.save()
             
         # TODO: return to proper view
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('user'))
 
 
-def tokens_view(request):
+def user_view(request):
     try:
         phone_number = request.session['phone_number']
     except KeyError:
@@ -145,7 +145,11 @@ def tokens_view(request):
             | Q(phone_number=phone_number, status=Queue.Status.BOOK)
             | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
             | Q(phone_number=phone_number, status=Queue.Status.SERVING))
-    return render(request, 'mainapp/basic_list_token.html', {'token_list': queues})
+        context = {
+            'token_list': queues,
+            'phone_number': request.session['phone_number']
+        }
+    return render(request, 'mainapp/basic_user.html', context)
 
 
 def reg_ph_view(request):
@@ -156,7 +160,7 @@ def reg_ph_view(request):
         return render(request, 'mainapp/basic_form_ph_no.html')
     else:
         request.session['phone_number'] = phone_number
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('user'))
 
 
 def get_num_customer(shop_id):

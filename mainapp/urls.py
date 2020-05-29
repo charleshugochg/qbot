@@ -14,7 +14,7 @@ urlpatterns = [
     path("book/<int:shop_id>/", views.book_view, name="book"),
     #ex: /1/cancel
     path("cancel/<int:shop_id>/", views.cancel_view, name="cancel"),
-    #ex: /tokens
-    path("tokens/", views.tokens_view, name="tokens"),
+    #ex: /user
+    path("user/", views.user_view, name="user"),
     path("regph/", views.reg_ph_view, name="register_phone_number"),
 ]

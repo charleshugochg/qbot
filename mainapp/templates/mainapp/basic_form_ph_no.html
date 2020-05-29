@@ -9,6 +9,6 @@
     <form action="{% url 'register_phone_number' %}" method="POST">
         {% csrf_token %}
         <input name="phone_number" type="number"/>
-        <input type="submit" value="Queue"/>
+        <input type="submit" value="Submit"/>
     </form>
 {% endblock body %}

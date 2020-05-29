@@ -1,0 +1,21 @@
+{% extends 'mainapp/base.html' %}
+
+{% block title %}
+    User
+{% endblock title %}
+
+{% block body %}
+    <h2>Phone Number: {{ phone_number }} <a href="{% url 'register_phone_number' %}">Change</a></h2>
+    <h4>Token List</h4>
+    <ul>
+    {% for token in token_list %}
+        <li>shop - {{ token.shop_id }} -- {{ token.token_id }} -- status -- {{ token.status }}
+        {% if token.arrival_time %}
+        -- {{ token.arrival_time }}
+        {% endif %}
+        <a href="{% url 'cancel' token.shop_id %}">Cancel</a>
+        </li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'index' %}">Browse shops</a>
+{% endblock body %}
