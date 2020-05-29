@@ -86,7 +86,7 @@ def queue_view(request, shop_id):
             | Q(phone_number=phone_number, status=Queue.Status.BOOK))
         if not queues:
             queue = shop.queue_set.create(phone_number=phone_number, status=Queue.Status.QUEUE)
-        request.session['phone_number'] = phone_number
+        
         # TODO: redirect to proper view
         return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
 
@@ -110,7 +110,7 @@ def book_view(request, shop_id):
             | Q(phone_number=phone_number, status=Queue.Status.BOOK))
         if not queues:
             book = shop.queue_set.create(phone_number=phone_number, status=Queue.Status.BOOK, arrival_time=arrival_time)
-        request.session['phone_number'] = phone_number
+        
         # TODO: redirect to proper view
         return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
 
@@ -157,3 +157,19 @@ def reg_ph_view(request):
     else:
         request.session['phone_number'] = phone_number
         return HttpResponseRedirect(reverse('index'))
+
+
+def get_num_customer(shop_id):
+    shop = get_object_or_404(Shop, pk=shop_id)
+    queues = shop.queue_set.filter(Q(status=Queue.Status.QUEUE)
+        | Q(status=Queue.Status.BOOK))
+    servings = shop.queue_set.filter(Q(status=Queue.Status.SERVING)
+        | Q(status=Queue.Status.ONCALL))
+    return len(servings), len(queues)
+
+def get_num_priors(shop_id, phone_number):
+    """ catch Queue.DoesNotExist """
+    shop = get_object_or_404(Shop, pk=shop_id)
+    my_queue = shop.queue_set.get(phone_number=phone_number, status=Queue.Status.QUEUE)
+    queues = shop.queue_set.filter(queue_date__lt=my_queue.queue_date, status=Queue.Status.QUEUE)
+    return len(queues)
