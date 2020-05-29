@@ -1,15 +1,14 @@
 {% extends 'mainapp/base.html' %}
 
 {% block title %}
-    Book Form
+    Arrival Time
 {% endblock title %}
 
 {% block body %}
-    <h1>Book</h1>
+    <h1>When do you arrive?</h1>
     <form action="{% url 'book' shop_id %}" method="POST">
         {% csrf_token %}
-        <input name="phone_number" type="number"/>
         <input name="arrival_time" type="datetime-local"/>
-        <input type="submit" value="Book"/>
+        <input type="submit" value="Submit"/>
     </form>
 {% endblock body %}
