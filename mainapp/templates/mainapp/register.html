@@ -10,11 +10,11 @@
         {{ user.username }}
         <form action="{% url  'register' %}" method="POST">
             {% csrf_token %}
-            User Name:
+            <p>Username:</p>
             <input name="username" type="text"/>
-            <br>Email:
+            <p>Email:</p>
             <input name="email" type="email"/>
-            <br>Password:
+            <p>Password:</p>
             <input name="password" type="password"/>
             <input type="submit" value="Register"/>
         </form>

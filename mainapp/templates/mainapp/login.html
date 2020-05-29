@@ -10,7 +10,9 @@
         {{ user.username }}
         <form action="{% url  'index' %}" method="POST">
             {% csrf_token %}
+            <p>Username: </p>
             <input name="username" type="text"/>
+            <p>Password: </p>
             <input name="password" type="password"/>
             <input type="submit" value="Login"/>
         </form>

@@ -28,7 +28,7 @@
 }
 
 .shop-section .row {
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .shop-info {
@@ -37,9 +37,9 @@
 }
 
 .shop-info div {
-    margin-left: 10px;
+    margin-left: 20px;
     padding: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     background-color: white;
     border: 1px solid rgba(199, 199, 199, 0.664);
     border-radius: 10px;
@@ -47,4 +47,9 @@
 
 .shop-info h4 {
     margin-bottom: 20px;
+}
+
+.shop-info div a {
+    text-decoration: none;
+    color: rgb(0, 197, 138);
 }
