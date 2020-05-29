@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.db.models import Q
-from .models import Shop
+from django.core.files.storage import FileSystemStorage
+from .models import Shop, ShopForm
 
 from .models import Shop, Queue
 
@@ -56,7 +57,7 @@ def register_view(request):
 
 def logout_view(request):
     logout(request)
-    return render(request, "mainapp/index.html", {"message": "Logged out."})
+    return redirect("index")
 
 
 def shop(request, shop_id):
@@ -67,6 +68,36 @@ def shop(request, shop_id):
     
     context = {"shop": shop}
     return render(request, "mainapp/shop.html", context)
+
+
+def shop_profile(request):
+    if not request.user.is_authenticated:
+        context = {"message": "Please create a shop profile, before you edit!"}
+        return render(request, "mainapp/shop_profile.html", context)
+    
+    user = request.user
+    shop = Shop.objects.get(user=request.user)
+    if request.method == "POST":
+        name = request.POST["name"]
+        shop_type = request.POST["shop_type"]
+        capacity = request.POST["capacity"]
+        phone_number = request.POST["phone_number"]
+        address = request.POST["shop_address"]
+        logo = request.FILES.get('logoImage', False)
+        
+        shop.name = name
+        shop.shop_type = shop_type
+        shop.capacity = capacity
+        shop.phone_number = phone_number
+        shop.address = address
+        shop.logo = logo
+        shop.save()
+    context = {
+        "user": user,
+        "shop": shop
+    }
+
+    return render(request, "mainapp/shop_profile.html", context)
 
 
 #####################################################################

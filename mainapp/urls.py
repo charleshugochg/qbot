@@ -8,6 +8,7 @@ urlpatterns = [
     path("register/", views.register_view, name="register"),
     path("logout/", views.logout_view, name="logout"),
     path("shop/<int:shop_id>/", views.shop, name="shop"),
+    path("shop_profile", views.shop_profile, name="shop_profile"),
     #ex: /1/queue
     path("<int:shop_id>/queue/", views.queue_view, name="queue"),
     #ex: /1/book

@@ -1,4 +1,4 @@
-{% extends "mainapp/base.html" %}
+{% extends "mainapp/base_with_nav.html" %}
 {% load static%}
 
 {% block title %}
@@ -6,20 +6,6 @@
 {% endblock %}
 
 {% block body %}
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark main-nav">
-            <a href="{% url 'index' %}"><img src="{% static 'mainapp/images/logo.png' %}" alt="Qbot logo"></a>
-            <p class="nav-text">Welcome! I am Qbot</p>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-              <div class="navbar-nav">
-                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-              </div>
-            </div>
-          </nav>
-
     <div class="container-custom no-gutters">
         <div class="shop-container">
               <img src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">

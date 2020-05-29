@@ -218,3 +218,17 @@ html {
     margin-top: 10px;
     font-size: 110%;
 }
+
+
+/* ------------------------- */
+/* Shop Profile View */
+/* ------------------------- */
+
+.profile-container {
+    padding: 20px;
+}
+
+.logo-profile-view {
+    display: inline-block;
+    width: 80px;
+}

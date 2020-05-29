@@ -1,0 +1,68 @@
+{% extends "mainapp/base_with_nav.html" %}
+{% load static%}
+
+{% block title %}
+    Queue App
+{% endblock %}
+
+{% block body %}
+    <div class="container-custom no-gutters">
+      <div class="profile-container">
+        {% if user.username %}
+        {{ form.as_p }}
+          <p>User: {{ user }}</p>
+          <p>Edit:</p>
+
+          <form action="{% url  'shop_profile' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Shop Name</span>
+              </div>
+              <input type="text" name="name" value="{{shop.name}}" class="form-control">
+            </div>
+
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Shop Type</span>
+              </div>
+              <input type="text" name="shop_type" value="{{shop.shop_type}}" placeholder="super market etc" class="form-control">
+            </div>
+
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Capacity</span>
+              </div>
+              <input type="number" name="capacity" value="{{shop.capacity}}" placeholder="0" class="form-control">
+            </div>
+
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Phone Number</span>
+              </div>
+              <input type="text" name="phone_number" value="{{shop.phone_number}}" placeholder="09" class="form-control">
+            </div>
+
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Shop Address</span>
+              </div>
+              <input type="text" name="shop_address" value="{{shop.address}}" placeholder="123/Shop Road" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="exampleFormControlFile1">Logo</label>
+              <img class="logo-profile-view" src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
+              <input type="file" name="logoImage" class="form-control-file" id="exampleFormControlFile1">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        {% else %}
+        {{ message }}
+      {% endif %}
+      </div>
+    </div>
+
+{% endblock %}
