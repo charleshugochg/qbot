@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.db.models import Q
@@ -57,6 +57,17 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return render(request, "mainapp/index.html", {"message": "Logged out."})
+
+
+def shop(request, shop_id):
+    try:
+        shop = Shop.objects.get(pk=shop_id)
+    except Shop.DoesNotExist:
+        raise Http404("Shop does not exist")
+    
+    context = {"shop": shop}
+    return render(request, "mainapp/shop.html", context)
+
 
 #####################################################################
 # Don't come down Rio
@@ -138,15 +149,3 @@ def tokens_view(request):
             | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
             | Q(phone_number=phone_number, status=Queue.Status.SERVING))
     return render(request, 'mainapp/basic_list_token.html', {'token_list': queues})
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 0c6bbe9c3c9b5e5a3ac2d7e1846b2d9749e3fa7c
-
-
-
-<<<<<<< HEAD
->>>>>>> 0c6bbe9c3c9b5e5a3ac2d7e1846b2d9749e3fa7c
-=======
->>>>>>> 0c6bbe9c3c9b5e5a3ac2d7e1846b2d9749e3fa7c
