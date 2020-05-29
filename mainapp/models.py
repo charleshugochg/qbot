@@ -28,7 +28,7 @@ class Shop(models.Model):
     address = models.CharField(max_length=256, blank=True)
     # location_field, to add later
 
-    logo = models.ImageField(upload_to=get_upload_path ,default='mainapp/media/logos/default.png')
+    logo = models.ImageField(upload_to=get_upload_path ,default='mainapp/logos/default.png')
 
     def __str__(self):
         return f"{self.name}, Type: {self.shop_type}, Capacity: {self.capacity}"
