@@ -76,76 +76,84 @@ def queue_view(request, shop_id):
     shop = get_object_or_404(Shop, pk=shop_id)
 
     try:
-        phone_number = request.POST['phone_number']
+        phone_number = request.session['phone_number']
     except KeyError:
         # TODO: redirect to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html', {'shop_id': shop_id})
+        return render(request, 'mainapp/basic_form_ph_no.html')
     else:
         # TODO: validate phone number
-        queue = shop.queue_set.filter(phone_number=phone_number, status=Queue.Status.QUEUE)
-        book = shop.queue_set.filter(phone_number=phone_number, status=Queue.Status.BOOK)
-        if not queue and not book:
+        queues = shop.queue_set.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
+            | Q(phone_number=phone_number, status=Queue.Status.BOOK))
+        if not queues:
             queue = shop.queue_set.create(phone_number=phone_number, status=Queue.Status.QUEUE)
         request.session['phone_number'] = phone_number
         # TODO: redirect to proper view
-        return HttpResponseRedirect(reverse('index', args=()))
+        return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
 
 
 def book_view(request, shop_id):
     shop = get_object_or_404(Shop, pk=shop_id)
 
     try:
-        phone_number = request.POST['phone_number']
-        arrival_time = request.POST['arrival_time']
+        phone_number = request.session['phone_number']
     except KeyError:
         # TODO: redirect to proper view
-        return render(request, 'mainapp/basic_form_book.html', {'shop_id': shop_id})
+        return render(request, 'mainapp/basic_form_ph_no.html')
     else:
+        if not 'arrival_time' in request.POST:
+            # return error
+            return render(request, 'mainapp/basic_form_arrival.html', {'shop_id': shop_id})
+        arrival_time = request.POST['arrival_time']
         # TODO: validate phone number
         # TODO: validate arrival time
-        queue = shop.queue_set.filter(phone_number=phone_number, status=Queue.Status.QUEUE)
-        book = shop.queue_set.filter(phone_number=phone_number, status=Queue.Status.BOOK)
-        if not book and not queue:
+        queues = shop.queue_set.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
+            | Q(phone_number=phone_number, status=Queue.Status.BOOK))
+        if not queues:
             book = shop.queue_set.create(phone_number=phone_number, status=Queue.Status.BOOK, arrival_time=arrival_time)
         request.session['phone_number'] = phone_number
         # TODO: redirect to proper view
-        return HttpResponseRedirect(reverse('index', args=()))
+        return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
 
 
 def cancel_view(request, shop_id):
     shop = get_object_or_404(Shop, pk=shop_id)
 
     try:
-        phone_number = request.POST['phone_number']
+        phone_number = request.session['phone_number']
     except KeyError:
         # TODO: return to proper view
-        return HttpResponseRedirect(reverse('index'))
+        return render(request, 'mainapp/basic_form_ph_no.html')
     else:
-        queues = shop.queue_set.filter(phone_number=phone_number, status=Queue.Status.QUEUE)
-        books = shop.queue_set.filter(phone_number=phone_number, status=Queue.Status.BOOK)
+        queues = shop.queue_set.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
+            | Q(phone_number=phone_number, status=Queue.Status.BOOK))
         for q in queues:
             q.status = Queue.Status.CANCEL
             q.save()
-        for b in books:
-            b.status = Queue.Status.CANCEL
-            b.save()
-        try:
-            del request.session['phone_number']
-        except KeyError:
-            pass
+            
         # TODO: return to proper view
         return HttpResponseRedirect(reverse('index'))
 
 
 def tokens_view(request):
     try:
-        phone_number = request.POST['phone_number']
+        phone_number = request.session['phone_number']
     except KeyError:
         # TODO: return to proper view
-        return HttpResponseRedirect(reverse('index'))
+        return render(request, 'mainapp/basic_form_ph_no.html')
     else:
         queues = Queue.objects.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE) 
             | Q(phone_number=phone_number, status=Queue.Status.BOOK)
             | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
             | Q(phone_number=phone_number, status=Queue.Status.SERVING))
     return render(request, 'mainapp/basic_list_token.html', {'token_list': queues})
+
+
+def reg_ph_view(request):
+    try:
+        phone_number = request.POST['phone_number']
+    except KeyError:
+        # TODO: change tmp form
+        return render(request, 'mainapp/basic_form_ph_no.html')
+    else:
+        request.session['phone_number'] = phone_number
+        return HttpResponseRedirect(reverse('index'))
