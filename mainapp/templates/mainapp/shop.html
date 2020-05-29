@@ -7,7 +7,7 @@
 
 {% block body %}
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark main-nav">
-            <img src="{% static 'mainapp/images/logo.png' %}" alt="Qbot logo">
+            <a href="{% url 'index' %}"><img src="{% static 'mainapp/images/logo.png' %}" alt="Qbot logo"></a>
             <p class="nav-text">Welcome! I am Qbot</p>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -22,7 +22,48 @@
 
     <div class="container-custom no-gutters">
         <div class="shop-container">
-          {{ shop }}
+              <img src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
+              <div class="shop-detail-text">
+                  <a class="link-header" href="{% url 'shop' shop.id %}"><h4>{{shop.name}}</h4></a>
+                  <p>Type: {{shop.shop_type}}</p>
+                  <p>Capacity: {{shop.capacity}}</p>
+                  <p>Phone: {{shop.phone_number}}</p>
+                  <p>Address: {{shop.address}}</p>
+              </div>
+        </div>
+
+        <div class="shop-container back-grey">
+          <div class="row">
+            <div class="quebook-info col-sm-6">
+              <h2>Queue</h2>
+              <div class="row no-gutters">
+                <p class="counter-text">5</p>
+                <p class="counter-info">People in shop</p>
+              </div>
+              <div class="row no-gutters">
+                <p class="counter-text">1</p>
+                <p class="counter-info">People in queue</p>
+              </div>
+            </div>
+
+            <div class="quebook-info col-sm-6 no-gutters">
+              <h2>Booking Times</h2>
+              <div class="book-table">
+                <div class="book-row">
+                  <p>12:00PM</p>
+                </div>
+                <div class="book-row">
+                  <p>12:30PM</p>
+                </div>
+                <div class="book-row">
+                  <p>12:45PM</p>
+                </div>
+                <div class="book-row">
+                  <p>1:00PM</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
 
