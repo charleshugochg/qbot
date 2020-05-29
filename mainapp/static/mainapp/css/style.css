@@ -1,12 +1,24 @@
-* {
-    /* box-sizing: border-box; */
-}
 
+/* ------------------------- */
+/* NAVBAR */
+/* ------------------------- */
 
 .main-nav img {
     height: 50px;
     width: auto;
 }
+
+.nav-text {
+    display: inline-block;
+    font-weight: 500;
+    margin: 0px 20px 2px 15px;
+    font-size: 110%;
+    color: rgb(241, 241, 241);
+}
+
+/* ------------------------- */
+/* Searching */
+/* ------------------------- */
 
 .search-area {
     text-align: center;
@@ -17,6 +29,10 @@
 .search-area h2 {
     margin-bottom: 20px;
 }
+
+/* ------------------------- */
+/* Contents */
+/* ------------------------- */
 
 .shop-section {
     margin-bottom: 30px;
@@ -36,20 +52,41 @@
     padding-left: 0;
 }
 
-.shop-info div {
+.shop-info-body {
     margin-left: 20px;
-    padding: 20px;
+    padding: 15px;
     margin-bottom: 20px;
     background-color: white;
     border: 1px solid rgba(199, 199, 199, 0.664);
     border-radius: 10px;
 }
 
-.shop-info h4 {
-    margin-bottom: 20px;
+.shop-info-body img {
+    display: inline-block;
+    width: 100px;
+    float: left;
+    margin-top: 0px;
 }
 
-.shop-info div a {
+.shop-info-text {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.shop-info-text h4 {
+    margin-bottom: 15px;
+}
+
+.shop-info-text p {
+    margin-bottom: 5px;
+}
+
+.shop-info-text a {
     text-decoration: none;
     color: rgb(0, 197, 138);
+}
+
+.shop-info-text a:hover {
+    text-decoration: none;
+    color: rgb(0, 173, 121);
 }

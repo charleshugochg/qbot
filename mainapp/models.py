@@ -8,7 +8,7 @@ import uuid
 # Created by DEV-B.
 
 def get_upload_path(instance, filename):
-    return f'mainapp/media/logos/{instance.user.id}/{filename}'
+    return f'mainapp/logos/{uuid.uuid4()}/{filename}'
 
 class Shop(models.Model):
     ''' Shop class : to store user's shop information.
