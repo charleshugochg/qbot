@@ -5,20 +5,24 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Login</h1>
-    {{ user.username }}
-    <form action="{% url  'index' %}" method="POST">
-        {% csrf_token %}
-        <input name="username" type="text"/>
-        <input name="password" type="password"/>
-        <input type="submit" value="Login"/>
-    </form>
-    {% if message %}
-        <div>
-            {{ message }}
-        </div>
-    {% endif %}
-    <br>
-    <a href="{% url 'index' %}">Back to page</a>
-    <a href="{% url 'register' %}">Register</a>
+    <div class="container-fluid">
+        <h1>Login</h1>
+        {{ user.username }}
+        <form action="{% url  'index' %}" method="POST">
+            {% csrf_token %}
+            <p>Username: </p>
+            <input name="username" type="text"/>
+            <p>Password: </p>
+            <input name="password" type="password"/>
+            <input type="submit" value="Login"/>
+        </form>
+        {% if message %}
+            <div>
+                {{ message }}
+            </div>
+        {% endif %}
+        <br>
+        <a href="{% url 'index' %}">Back to page</a>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
 {% endblock %}

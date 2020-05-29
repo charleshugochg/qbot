@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from .models import Shop
 
 from .models import Shop, Queue
 
@@ -19,14 +20,14 @@ def index(request):
         else:
             return render(request, "mainapp/login.html", {"message": "Invalid credentials."})
 
-    if not request.user.is_authenticated:
-        return render(request, "mainapp/index.html", {"message": None})
-
     context = {
-        "user": request.user
+        "shops": Shop.objects.all(),
     }
+    if not request.user.is_authenticated:
+        return render(request, "mainapp/index.html", context)
 
-    return render(request, "mainapp/index.html", {"message": context})
+    context["user"] = request.user
+    return render(request, "mainapp/index.html", context)
 
 
 def login_view(request):

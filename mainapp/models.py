@@ -31,7 +31,7 @@ class Shop(models.Model):
     logo = models.ImageField(upload_to=get_upload_path ,default='mainapp/media/logos/default.png')
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name}, Type: {self.shop_type}, Capacity: {self.capacity}"
 
 
 #############################################################################
