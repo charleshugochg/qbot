@@ -1,0 +1,14 @@
+{% extends 'mainapp/base.html' %}
+
+{% block title %}
+    Queue Form
+{% endblock title %}
+
+{% block body %}
+    <h1>Queue</h1>
+    <form action="{% url 'queue' shop_id %}" method="POST">
+        {% csrf_token %}
+        <input name="phone_number" type="number"/>
+        <input type="submit" value="Queue"/>
+    </form>
+{% endblock body %}

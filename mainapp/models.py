@@ -40,10 +40,11 @@ class Shop(models.Model):
 class Queue(models.Model):
     class Status(models.IntegerChoices):
         QUEUE = 0
-        CANCEL = 1
+        BOOK = 1
         ONCALL = 2
         SERVING = 3
         SUCCESS = 4
+        CANCEL = 5
 
     shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, blank=True, null=True)
     queue_date = models.DateTimeField('datetime queue', default=timezone.now)
