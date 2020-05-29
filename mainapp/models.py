@@ -38,20 +38,21 @@ class Shop(models.Model):
 # Don't come down Rio
 
 class Queue(models.Model):
-    class Status(models.IntegerChoices):
-        QUEUE = 0
-        CANCEL = 1
-        ONCALL = 2
-        SERVING = 3
-        SUCCESS = 4
+    class Status(models.TextChoices):
+        QUEUE = 'QUEUE'
+        BOOK = 'BOOK'
+        ONCALL = 'ONCALL'
+        SERVING = 'SERVING'
+        SUCCESS = 'SUCCESS'
+        CANCEL = 'CANCEL'
 
     shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, blank=True, null=True)
     queue_date = models.DateTimeField('datetime queue', default=timezone.now)
     phone_number = models.CharField(max_length=12, blank=True)
     arrival_time = models.DateTimeField('datetime arrival', null=True, default=None)
     token_id = models.UUIDField(default=uuid.uuid4, editable=False)
-    status = models.IntegerField(choices=Status.choices)
+    status = models.CharField(max_length=10, choices=Status.choices)
 
     def __str__(self):
-        return f"Queue {self.id} with token {self.token_id}"
+        return f"Queue {self.id} with token {self.token_id}, status {self.status}"
     
