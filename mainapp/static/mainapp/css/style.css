@@ -1,3 +1,7 @@
+* {
+    /* box-sizing: border-box; */
+}
+
 
 .main-nav img {
     height: 50px;
@@ -20,13 +24,20 @@
 
 .shop-section h2 {
     margin-bottom: 30px;
+    padding-left: 20px;
+}
+
+.shop-section .row {
+    margin-right: 10px;
 }
 
 .shop-info {
-    
+    margin-right: 0;
+    padding-left: 0;
 }
 
 .shop-info div {
+    margin-left: 10px;
     padding: 20px;
     margin-bottom: 10px;
     background-color: white;

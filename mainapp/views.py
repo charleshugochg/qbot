@@ -18,14 +18,13 @@ def index(request):
         else:
             return render(request, "mainapp/login.html", {"message": "Invalid credentials."})
 
-    if not request.user.is_authenticated:
-        return render(request, "mainapp/index.html", {"message": None})
-
     context = {
-        "user": request.user,
         "shops": Shop.objects.all(),
     }
+    if not request.user.is_authenticated:
+        return render(request, "mainapp/index.html", context)
 
+    context["user"] = request.user
     return render(request, "mainapp/index.html", context)
 
 
