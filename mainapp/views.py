@@ -12,16 +12,6 @@ from .models import Shop, Queue
 # Created by DEV-B.
 
 def index(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse('index'))
-        else:
-            return render(request, "mainapp/login.html", {"message": "Invalid credentials."})
-
     context = {
         "shops": Shop.objects.all(),
     }
@@ -33,7 +23,16 @@ def index(request):
 
 
 def login_view(request):
-    return render(request, "mainapp/login.html", {"message": None})
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            return render(request, "mainapp/login.html", {"message": "Invalid credentials."})
+    return render(request, "mainapp/login.html")
 
 
 def register_view(request):
