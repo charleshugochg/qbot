@@ -11,10 +11,10 @@
               <img src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
               <div class="shop-detail-text">
                   <a class="link-header" href="{% url 'shop' shop.id %}"><h4>{{shop.name}}</h4></a>
-                  <p>Type: {{shop.shop_type}}</p>
-                  <p>Capacity: {{shop.capacity}}</p>
-                  <p>Phone: {{shop.phone_number}}</p>
-                  <p>Address: {{shop.address}}</p>
+                  <p><span>Type: </span>{{shop.shop_type}}</p>
+                  <p><span>Capacity: </span>{{shop.capacity}}</p>
+                  <p><span>Phone: </span>{{shop.phone_number}}</p>
+                  <p><span>Address: </span>{{shop.address}}</p>
               </div>
         </div>
 

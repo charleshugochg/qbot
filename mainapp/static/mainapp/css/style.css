@@ -1,7 +1,7 @@
 
 html {
-    background-color: #fff;
-    color: #555;
+    background-color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
     font-family: 'Montserrat', 'Arial', sans-serif;
     font-weight: 300;
     font-size: 18px;
@@ -11,6 +11,10 @@ html {
 /* ------------------------- */
 /* REUSUABLE */
 /* ------------------------- */
+
+.main-color {
+    color: rgb(0, 197, 138);
+}
 
 .link-header {
     text-decoration: none;
@@ -60,12 +64,145 @@ html {
 
 .search-area {
     text-align: center;
-    margin: 40px 0;
-    padding: 0 10%;
+    margin: 20px 0;
+    padding: 0 5%;
 }
 
-.search-area h2 {
+.shop-search {
+    padding-left: 10px;
+    font-size: 100%;
+    width: 85%;
+    border: 1px solid rgb(202, 202, 202);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    transition: border 0.2s;
+}
+
+.shop-search:focus {
+    outline: none;
+    border: 1px solid rgb(88, 88, 88);
+}
+
+
+/* ------------------------- */
+/* Main Menu */
+/* ------------------------- */
+
+.card-info {
+    padding: 15px 20px;
+    background-color: rgb(236, 236, 236);
+}
+
+.queue-info {
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 3px rgb(202, 202, 202);
+    border-radius: 5px;
+    transition: box-shadow 0.2s;
+}
+
+.queue-info:hover {
+    box-shadow: 0px 0px 8px rgba(0, 173, 121, 0.507);
+}
+
+.queue-block {
+    display: block;
+    text-align: center;
+}
+
+.queue-info p{
+    font-weight: 500;
+    margin: 2px;
+    font-size: 80%;
+}
+
+.queue-info h2{
+    margin-top: 10px;
+    font-size: 220%;
+    font-weight: 400;
+}
+
+.queue-info h3{
+    color: rgb(71, 71, 71);
+    font-size: 105%;
+}
+
+.queue-info h4{
+    font-weight: 500;
+    font-size: 80%;
+}
+
+.main-menu {
+    margin-top: 20px;
+    padding: 0px 10px;
+}
+
+.menu-item {
     margin-bottom: 20px;
+}
+
+.menu-item a:link,
+.menu-item a:visited {
+    text-decoration: none;
+    color: rgb(31, 31, 31);
+}
+
+.menu-item a:link,
+.menu-item a:visited {
+    text-decoration: none;
+    color: rgb(10, 10, 10);
+}
+
+.item-detail {
+    width: 90%;
+    margin: auto;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding-top: 10px;
+    border: 1px solid rgb(219, 219, 219);
+    box-shadow: 0px 1px 3px transparent;
+    transition: box-shadow 0.2s;
+}
+
+.item-detail:hover {
+    box-shadow: 1px 2px 5px rgb(180, 180, 180);
+}
+
+.item-detail i{
+    padding-bottom: 2px;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    display: block;
+    font-size: 290%;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    color: #fff;
+}
+
+.item-color1 {
+    background-color: #30D6CE;
+}
+
+.item-color2 {
+    background-color: #FF6365;
+}
+
+.item-color3 {
+    background-color: #0088CC;
+}
+
+.item-color4 {
+    background-color: rgb(86, 172, 179);
+}
+
+.item-detail p{
+    margin: 0 0 10px 0;
+    text-align: center;
+    display: block;
+    font-size: 90%;
+    font-weight: 500;
 }
 
 /* ------------------------- */
@@ -81,11 +218,12 @@ html {
     height: 2px;
     background-color:rgb(0, 173, 121);
     content: " ";
-    width: 90px;
+    width: 116px;
     margin-top: 5px;
 }
 
 .shop-section h2 {
+    font-size: 140%;
     margin-bottom: 30px;
     padding-left: 20px;
 }
@@ -147,7 +285,7 @@ html {
 .shop-container img {
     display: inline-block;
     float: left;
-    width: 160px;
+    width: 150px;
 }
 
 .shop-detail-text {
@@ -156,7 +294,14 @@ html {
 }
 
 .shop-detail-text p {
+    font-size: 95%;
+    font-weight: 500;
     margin-bottom: 5px;
+}
+
+.shop-detail-text span {
+    font-size: 105%;
+    color: rgb(148, 148, 148);
 }
 
 .quebook-info {
@@ -241,6 +386,7 @@ html {
 }
 
 .booking-row {
+    padding-top: 20px;
     width: 90%;
 }
 
@@ -257,10 +403,15 @@ html {
     transition: color 0.2s, background-color 0.2s;
 }
 
-.book-select option:checked, option:hover {
-    background: white linear-gradient(to bottom, rgb(170, 212, 200), rgb(48, 180, 140));
-    color: white;
+.book-select option:active {
+    color: black;
 }
+
+.book-select option:checked, option:hover {
+    background: white linear-gradient(to bottom, rgb(214, 214, 214), rgb(206, 206, 206));
+    color: rgb(0, 197, 138);
+}
+
 
 .book-btn {
     margin: 20px 20px 40px 20px;

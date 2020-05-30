@@ -1,0 +1,40 @@
+{% extends "mainapp/base_with_nav.html" %}
+{% load static%}
+
+{% block title %}
+    Shop List
+{% endblock %}
+
+{% block body %}
+    <div class="container-custom no-gutters">
+        <div class="search-area">
+            <!-- <h1>Search Here</h1> -->
+            <div class="input-group mb-3">
+                <input type="text" class="shop-search" placeholder="Shop search">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button">Find</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="shop-section">
+            <h2>Shops List</h2>
+            <div class="row no-gutters">
+                {% for shop in shops %}
+                <div class="col-sm-4 shop-info">
+                    <div class="shop-info-body">
+                        <img src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
+                        <div class="shop-info-text">
+                            <a class="link-header" href="{% url 'shop' shop.id %}"><h4>{{shop.name}}</h4></a>
+                            <p>Type: {{shop.shop_type}}</p>
+                            <p>Capacity: {{shop.capacity}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+
+{% endblock %}

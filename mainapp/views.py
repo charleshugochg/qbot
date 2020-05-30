@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.db.models import Q
 from django.core.files.storage import FileSystemStorage
-from .models import Shop, ShopForm
+from .models import Shop
 
 from .models import Shop, Queue
 
@@ -13,7 +13,7 @@ from .models import Shop, Queue
 
 def index(request):
     context = {
-        "shops": Shop.objects.all(),
+        "phone_number": request.session.get('phone_number'),
     }
     if not request.user.is_authenticated:
         return render(request, "mainapp/index.html", context)
@@ -59,6 +59,11 @@ def logout_view(request):
     return redirect("index")
 
 
+def shop_list(request):
+    context = {"shops": Shop.objects.all(),}
+    return render(request, "mainapp/shop_list.html", context)
+
+
 def shop(request, shop_id):
     try:
         shop = Shop.objects.get(pk=shop_id)
@@ -87,14 +92,15 @@ def shop_profile(request):
         capacity = request.POST["capacity"]
         phone_number = request.POST["phone_number"]
         address = request.POST["shop_address"]
-        logo = request.FILES.get('logoImage', False)
-        
         shop.name = name
         shop.shop_type = shop_type
         shop.capacity = capacity
         shop.phone_number = phone_number
         shop.address = address
-        shop.logo = logo
+
+        logo = request.FILES.get('logoImage', False)
+        if logo:
+            shop.logo = logo
         shop.save()
     context = {
         "user": user,

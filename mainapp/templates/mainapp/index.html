@@ -8,30 +8,62 @@
 {% block body %}
     <div class="container-custom no-gutters">
         <div class="search-area">
-            <h1>Search Here</h1>
+            <!-- <h1>Search Here</h1> -->
             <div class="input-group mb-3">
-                <input type="text" class="form-control shop-search" placeholder="Shop name or type">
+                <input type="text" class="shop-search" placeholder="Shop search">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="button">Find</button>
+                  <button class="btn btn-outline-dark" type="button">Find</button>
                 </div>
             </div>
         </div>
 
-        <div class="shop-section">
-            <h2>Shops</h2>
-            <div class="row no-gutters">
-                {% for shop in shops %}
-                <div class="col-sm-4 shop-info">
-                    <div class="shop-info-body">
-                        <img src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
-                        <div class="shop-info-text">
-                            <a class="link-header" href="{% url 'shop' shop.id %}"><h4>{{shop.name}}</h4></a>
-                            <p>Type: {{shop.shop_type}}</p>
-                            <p>Capacity: {{shop.capacity}}</p>
-                        </div>
-                    </div>
+        <div class="card-info">
+            <div class="queue-info">
+                <p class="queue-block main-color">Qbot Technology</p>
+                <p class="queue-block">Yangon</p>
+                <h2 class="queue-block">CS229</h2>
+                <h3 class="queue-block">Shop Name</h3>
+                <h4>Status: Waiting</h4>
+                <h4>Date: 12:00PM</h4>
+            </div>
+        </div>
+
+        <div class="main-menu row no-gutters">
+            <div class="menu-item col-6">
+                <a href="{% url 'shop_list' %}">
+                <div class="item-detail">
+                    <i class="ion-ios-cart item-color1"></i>
+                    <p>Shop List</p>
                 </div>
-                {% endfor %}
+                </a>
+            </div>
+            <div class="menu-item col-6">
+                <a href="{% url 'user' %}">
+                <div class="item-detail">
+                    <i class="ion-ios-bookmarks item-color2"></i>
+                    <p>Your Tokens</p>
+                </div>
+                </a>
+            </div>
+            <div class="menu-item col-6">
+                <a href="{% url 'shop_profile' %}">
+                <div class="item-detail">
+                    <i class="ion-ios-cog item-color3"></i>
+                    <p>Setting</p>
+                </div>
+                </a>
+            </div>
+            <div class="menu-item col-6">
+                <a href="{% url 'register_phone_number' %}">
+                <div class="item-detail">
+                    <i class="ion-ios-person item-color4"></i>
+                    {% if phone_number %}
+                        <p>Ph: {{ phone_number }}</p>
+                    {% else %}
+                        <p>Add Phone Number</p>
+                    {% endif %}
+                </div>
+                </a>
             </div>
         </div>
         

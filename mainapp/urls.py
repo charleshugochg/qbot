@@ -7,8 +7,9 @@ urlpatterns = [
     path("login/", views.login_view, name="login"),
     path("register/", views.register_view, name="register"),
     path("logout/", views.logout_view, name="logout"),
+    path("shop_list/", views.shop_list, name="shop_list"),
     path("shop/<int:shop_id>/", views.shop, name="shop"),
-    path("shop_profile", views.shop_profile, name="shop_profile"),
+    path("shop_profile/", views.shop_profile, name="shop_profile"),
     #ex: /queue/1
     path("queue/<int:shop_id>/", views.queue_view, name="queue"),
     #ex: /book/1

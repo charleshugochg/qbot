@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django import forms
 
 import uuid
 
@@ -33,13 +32,6 @@ class Shop(models.Model):
 
     def __str__(self):
         return f"{self.name}, Type: {self.shop_type}, Capacity: {self.capacity}"
-
-
-class ShopForm(forms.ModelForm):
-
-    class Meta:
-        model = Shop
-        fields = ['name', 'capacity', 'phone_number', 'address', 'logo']
 
 
 #############################################################################
