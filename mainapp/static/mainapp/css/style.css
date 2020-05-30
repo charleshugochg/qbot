@@ -529,6 +529,13 @@ html {
     color: #eee;
 }
 
+.logo-qr {
+    display: inline-block;
+    height: 1.5em;
+    width: 1.5em;
+    background: url(../images/qr_icon.svg) 50% 50% no-repeat;
+}
+
 /* ----------------- */
 /* qr view css */
 /* ----------------- */

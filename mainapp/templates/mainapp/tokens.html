@@ -5,16 +5,6 @@
 {% endblock title %}
 
 {% block body %}
-    {% comment %} <ul>
-    {% for token in token_list %}
-        <li>shop - {{ token.shop_id }} -- {{ token.token_id }} -- status -- {{ token.status }}
-        {% if token.arrival_time %}
-        -- {{ token.arrival_time }}
-        {% endif %}
-        <a href="{% url 'cancel' token.shop_id %}">Cancel</a>
-        </li>
-    {% endfor %}
-    </ul> {% endcomment %}
     {% for token in token_list %}
         <div class="card-info">
             <div class="queue-info {% if token.on_call %}queue-active{% endif %}">
@@ -22,8 +12,21 @@
                 <p class="queue-block">Yangon</p>
                 <h2 class="queue-block">QB{{ token.queue_id }}</h2>
                 <h3 class="queue-block">{{ token.shop_name }}</h3>
-                <h4>Status: {{ token.status }}</h4>
-                <h4>Date: 12:00PM</h4>
+                <div class="">
+                    <a class="btn btn-danger" href="{% url 'cancel' token.shop_id %}" role="button">
+                        Cancel
+                    </a>
+                </div>
+                <div class="">
+                    <h4>Status: {{ token.status }}</h4>
+                    <h4>Date: 12:00PM</h4>
+                </div>
+                <div class="">
+                    <a class="btn btn-light" href="{% url 'qr_view' token.id %}" role="button">
+                        <div class="logo-qr"></div>
+                    </a>
+                </div>
+                <div></div>
             </div>
         </div>
     {% endfor %}
