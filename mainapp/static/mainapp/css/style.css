@@ -10,7 +10,7 @@ html {
     color: rgb(255, 255, 255);
     font-family: 'Montserrat', 'Arial', sans-serif;
     font-weight: 300;
-    font-size: 18px;
+    font-size: 15px;
     text-rendering: optimizeLegibility;
 }
 
@@ -24,7 +24,7 @@ html {
 
 .link-header {
     text-decoration: none;
-    color: #1AA2DC;
+    color: #7D7D7D;
 }
 
 .link-header:hover {
@@ -246,18 +246,18 @@ html {
     height: 2px;
     background-color:#1AA2DC;
     content: " ";
-    width: 116px;
+    width: 60px;
     margin-top: 5px;
 }
 
 .shop-section h2 {
-    font-size: 140%;
+    font-size: 120%;
     margin-bottom: 30px;
     padding-left: 20px;
 }
 
 .shop-section .row {
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 .shop-info {
@@ -266,32 +266,107 @@ html {
 }
 
 .shop-info-body {
-    margin-left: 20px;
+    margin-left: 10px;
     padding: 15px;
     margin-bottom: 20px;
     background-color: white;
     border: 1px solid rgba(199, 199, 199, 0.664);
     border-radius: 10px;
+    box-shadow: 1px 1px 2px #DEDEDE;
+    transform: border 0.2s;
+}
+
+.shop-info-body:hover {
+    border: 1px solid #1AA2DC;
 }
 
 .shop-info-body img {
     display: inline-block;
-    width: 100px;
+    max-width: 100px;
+    width: 20%;
     float: left;
     margin-top: 0px;
 }
 
 .shop-info-text {
     display: inline-block;
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
 .shop-info-text h4 {
-    margin-bottom: 15px;
+    font-size: 140%;
+    font-weight: 400;
+    margin-bottom: 3px;
 }
 
 .shop-info-text p {
+    font-size: 90%;
+    font-weight: 500;
     margin-bottom: 5px;
+}
+
+.small-txt {
+    font-size: 70%;
+}
+
+.small-que-txt {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 500;
+    margin-left: 10px;
+    color: #1AA2DC;
+    font-size: 105%;
+}
+
+.capacity-book {
+    margin-top: 0px;
+    margin-right: 5px;
+    float: right;
+    display: inline-block;
+}
+
+.cap-box {
+    padding: 0px 10px;
+    border: 1px solid #BCC5E0;
+    border-radius: 5px;
+}
+
+.cap-box p {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.cap-box p:first-child {
+    font-size: 60%;
+}
+
+.cap-box p:last-child {
+    font-weight: 500;
+}
+
+.c-blue-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    background-color: #1AA2DC;
+    border: 1px solid transparent;
+    transition: background-color 0.2s, border 0.2s;
+    border-radius: 20px;
+}
+
+.c-blue-btn:hover {
+    text-decoration: none;
+    background-color: white;
+    color: #1AA2DC;
+    border: 1px solid #1AA2DC;
+}
+
+.book-now-btn {
+    margin-top: 10px;
+    padding: 5px 15px;
+    font-size: 80%;
+    text-transform: uppercase;
 }
 
 
