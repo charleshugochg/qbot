@@ -118,9 +118,14 @@ def queue_view(request, shop_id):
     else:
         # TODO: validate phone number
         queues = shop.queue_set.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
-            | Q(phone_number=phone_number, status=Queue.Status.BOOK))
+            | Q(phone_number=phone_number, status=Queue.Status.BOOK)
+            | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
+            | Q(phone_number=phone_number, status=Queue.Status.SERVING))
         if not queues:
             queue = shop.queue_set.create(phone_number=phone_number, status=Queue.Status.QUEUE)
+
+        # TODO: we could change this job to another
+        update_queues(shop_id)
         
         # TODO: redirect to proper view
         return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
@@ -142,7 +147,9 @@ def book_view(request, shop_id):
         # TODO: validate phone number
         # TODO: validate arrival time
         queues = shop.queue_set.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
-            | Q(phone_number=phone_number, status=Queue.Status.BOOK))
+            | Q(phone_number=phone_number, status=Queue.Status.BOOK)
+            | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
+            | Q(phone_number=phone_number, status=Queue.Status.SERVING))
         if not queues:
             book = shop.queue_set.create(phone_number=phone_number, status=Queue.Status.BOOK, arrival_time=arrival_time)
         
@@ -160,7 +167,8 @@ def cancel_view(request, shop_id):
         return render(request, 'mainapp/basic_form_ph_no.html')
     else:
         queues = shop.queue_set.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
-            | Q(phone_number=phone_number, status=Queue.Status.BOOK))
+            | Q(phone_number=phone_number, status=Queue.Status.BOOK)
+            | Q(phone_number=phone_number, status=Queue.Status.ONCALL))
         for q in queues:
             q.status = Queue.Status.CANCEL
             q.save()
@@ -185,6 +193,26 @@ def user_view(request):
             'phone_number': request.session['phone_number']
         }
     return render(request, 'mainapp/basic_user.html', context)
+
+def success_view(request, shop_id):
+    shop = get_object_or_404(Shop, pk=shop_id)
+
+    try:
+        phone_number = request.session['phone_number']
+    except KeyError:
+        # TODO: return to proper view
+        return render(request, 'mainapp/basic_form_ph_no.html')
+    else:
+        queues = shop.queue_set.filter(phone_number=phone_number, status=Queue.Status.SERVING)
+        for q in queues:
+            q.status = Queue.Status.SUCCESS
+            q.save()
+
+        # TODO: we could change this job to another
+        update_queues(shop_id)
+        
+        # TODO: redirect to proper view
+        return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
 
 
 def reg_ph_view(request):
@@ -212,3 +240,12 @@ def get_num_priors(shop_id, phone_number):
     my_queue = shop.queue_set.get(phone_number=phone_number, status=Queue.Status.QUEUE)
     queues = shop.queue_set.filter(queue_date__lt=my_queue.queue_date, status=Queue.Status.QUEUE)
     return len(queues)
+
+def update_queues(shop_id):
+    shop = get_object_or_404(Shop, pk=shop_id)
+    servings = shop.queue_set.filter(Q(status=Queue.Status.SERVING) | Q(status=Queue.Status.ONCALL))
+    num_free_space = shop.capacity - len(servings)
+    queues = shop.queue_set.filter(status=Queue.Status.QUEUE).order_by('queue_date')[:num_free_space]
+    for q in queues:
+        q.status = Queue.Status.ONCALL
+        q.save()

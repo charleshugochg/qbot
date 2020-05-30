@@ -30,7 +30,7 @@
                 <p class="counter-text">{{ in_queue }}</p>
                 <p class="counter-info">People in queue</p>
               </div>
-              <a href="#" class="join-btn">Join</a>
+              <a href="{% url 'queue' shop.id %}" class="join-btn">Join</a>
             </div>
 
             <div class="quebook-info col-sm-6 no-gutters">

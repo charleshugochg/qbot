@@ -57,7 +57,7 @@ class Queue(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, blank=True, null=True)
     queue_date = models.DateTimeField('datetime queue', default=timezone.now)
     phone_number = models.CharField(max_length=12, blank=True)
-    arrival_time = models.DateTimeField('datetime arrival', null=True, default=None)
+    arrival_time = models.DateTimeField('datetime arrival', blank=True, null=True, default=None)
     token_id = models.UUIDField(default=uuid.uuid4, editable=False)
     status = models.CharField(max_length=10, choices=Status.choices)
 
