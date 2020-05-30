@@ -17,10 +17,10 @@
       </head>
     <body>
         <nav class="navbar navbar-expand-md sticky-top main-nav">
-            <a href="{% url 'index' %}"><i class="ion-ios-arrow-left back-btn"></i></a>
-            <p class="nav-text"></p>
+            {% block backlink %}{% endblock %}
+            <p class="nav-text">{% block pagehead %}{% endblock %}</p>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-              <i class="ion-ios-search-strong custom-icon"></i>
+              {% block toggleicon %}{% endblock %}
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
