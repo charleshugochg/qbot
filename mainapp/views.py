@@ -62,10 +62,15 @@ def logout_view(request):
 def shop(request, shop_id):
     try:
         shop = Shop.objects.get(pk=shop_id)
+        in_serving, in_queue = get_num_customer(shop_id)
     except Shop.DoesNotExist:
         raise Http404("Shop does not exist")
     
-    context = {"shop": shop}
+    context = {
+        "shop": shop,
+        "in_serving": in_serving,
+        "in_queue": in_queue,
+    }
     return render(request, "mainapp/shop.html", context)
 
 
