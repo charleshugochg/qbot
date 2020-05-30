@@ -1,68 +1,98 @@
 {% extends "mainapp/base_with_nav.html" %}
-{% load static%}
 
 {% block title %}
-    Queue App
+    Shop Profile
+{% endblock %}
+
+{% block pagehead %}
+    Shop Profile
+{% endblock %}
+
+{% block toggleicon %}
+  <i class="ion-ios-chatboxes-outline custom-icon"></i>
+{% endblock %}
+
+{% block backlink %}
+    <a href="{% url 'index' %}"><i class="ion-ios-arrow-left back-btn"></i></a>
 {% endblock %}
 
 {% block body %}
-    <div class="container-custom no-gutters">
-      <div class="profile-container">
-        {% if user.username %}
-        {{ form.as_p }}
-          <p>User: {{ user }}</p>
-          <p>Edit:</p>
+<main class="login-form">
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">User: {{ user }}</div>
+                    <div class="card-body">
+                        <form action="{% url  'shop_profile' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">Shop Name</label>
+                                <div class="col-md-6">
+                                    <input type="text" name="name" value="{{shop.name}}" class="form-control">
+                                </div>
+                            </div>
 
-          <form action="{% url  'shop_profile' %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="">Shop Name</span>
-              </div>
-              <input type="text" name="name" value="{{shop.name}}" class="form-control">
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">Type</label>
+                                <div class="col-md-6">
+                                    <input type="text" name="shop_type" value="{{shop.shop_type}}" placeholder="super market etc" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">Capacity</label>
+                                <div class="col-md-6">
+                                    <input type="number" name="capacity" value="{{shop.capacity}}" placeholder="0" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">Phone</label>
+                                <div class="col-md-6">
+                                    <input type="tel" name="phone_number" value="{{shop.phone_number}}" placeholder="09" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">Address</label>
+                                <div class="col-md-6">
+                                    <input type="text" name="shop_address" value="{{shop.address}}" placeholder="123/Shop Road" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlFile1">Logo</label>
+                                <img class="logo-profile-view" src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
+                                <input type="file" name="logoImage" class="form-control-file" id="exampleFormControlFile1">
+                              </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-4">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="remember"> Remember Me
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Save
+                                </button>
+                                <a href="#" class="btn btn-link">
+                                    Forgot Your Password?
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="">Shop Type</span>
-              </div>
-              <input type="text" name="shop_type" value="{{shop.shop_type}}" placeholder="super market etc" class="form-control">
-            </div>
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="">Capacity</span>
-              </div>
-              <input type="number" name="capacity" value="{{shop.capacity}}" placeholder="0" class="form-control">
-            </div>
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="">Phone Number</span>
-              </div>
-              <input type="text" name="phone_number" value="{{shop.phone_number}}" placeholder="09" class="form-control">
-            </div>
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="">Shop Address</span>
-              </div>
-              <input type="text" name="shop_address" value="{{shop.address}}" placeholder="123/Shop Road" class="form-control">
-            </div>
-
-            <div class="form-group">
-              <label for="exampleFormControlFile1">Logo</label>
-              <img class="logo-profile-view" src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
-              <input type="file" name="logoImage" class="form-control-file" id="exampleFormControlFile1">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        {% else %}
-        {{ message }}
-      {% endif %}
-      </div>
+        </div>
+    </div>
     </div>
 
+</main>
 {% endblock %}

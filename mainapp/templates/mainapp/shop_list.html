@@ -17,6 +17,25 @@
     <a href="{% url 'index' %}"><i class="ion-ios-arrow-left back-btn"></i></a>
 {% endblock %}
 
+{% block options %}
+<div class="filter-div">
+    <p>Filters</p>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+        <label class="form-check-label" for="exampleRadios1">
+            By Shop Name
+        </label>
+        </div>
+        <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+        <label class="form-check-label" for="exampleRadios2">
+            By Shop Type
+        </label>
+    </div>
+</div>
+{% endblock %}
+
+
 {% block body %}
     <div class="container-custom no-gutters">
         <div class="search-area-shop-list">
@@ -35,27 +54,29 @@
             <h2>Shops</h2>
             <div class="row no-gutters">
                 {% for shop in shops %}
-                <a href="{% url 'shop' shop.id %}">
-                <div class="col-sm-4 shop-info">
-                    <div class="shop-info-body clearfix">
-                        <img src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
-                        <div class="shop-info-text">
-                            <a class="link-header" href="{% url 'shop' shop.id %}"><h4>{{shop.name}}</h4></a>
-                            <p>{{shop.address}}</p>
-                            <!-- Here Fake Data -->
-                            <p><span class="small-txt">Waiting Queues</span><span class="small-que-txt"> 25</span></p>
-                        </div>
-                        <div class="capacity-book">
-                            <div class="cap-box">
-                                <p class="small-txt">Capacity</p>
-                                <p>{{shop.capacity}}</p>
+                    {% if shop.name %}
+                        <a href="{% url 'shop' shop.id %}">
+                        <div class="col-sm-4 shop-info">
+                            <div class="shop-info-body clearfix">
+                                <img src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
+                                <div class="shop-info-text">
+                                    <a class="link-header" href="{% url 'shop' shop.id %}"><h4>{{shop.name}}</h4></a>
+                                    <p>{{shop.address}}</p>
+                                    <!-- Here Fake Data -->
+                                    <p><span class="small-txt">Waiting Queues</span><span class="small-que-txt"> 25</span></p>
+                                </div>
+                                <div class="capacity-book">
+                                    <div class="cap-box">
+                                        <p class="small-txt">Capacity</p>
+                                        <p>{{shop.capacity}}</p>
+                                    </div>
+                                    <!-- Faake Link -->
+                                    <a class="book-now-btn c-blue-btn" href="#">Book Now</a>
+                                </div>
                             </div>
-                            <!-- Faake Link -->
-                            <a class="book-now-btn c-blue-btn" href="#">Book Now</a>
+                            </a>
                         </div>
-                    </div>
-                    </a>
-                </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

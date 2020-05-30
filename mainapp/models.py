@@ -8,7 +8,7 @@ from secrets import token_urlsafe
 # Created by DEV-B.
 
 def get_upload_path(instance, filename):
-    return f'mainapp/logos/{uuid.uuid4()}/{filename}'
+    return f'mainapp/logos/{instance.id}/{filename}'
 
 class Shop(models.Model):
     ''' Shop class : to store user's shop information.

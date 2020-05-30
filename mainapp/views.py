@@ -14,13 +14,18 @@ import re
 # Created by DEV-B.
 
 def index(request):
-    context = {
-        "phone_number": request.session.get('phone_number'),
-    }
     if not request.user.is_authenticated:
-        return render(request, "mainapp/index.html", context)
+        phone = request.session.get('phone_number')
+        if phone:
+            context = {
+                "phone_number": phone,
+                }
+            return render(request, "mainapp/index.html", context)
+        return render(request, "mainapp/first_time.html")
 
-    context["user"] = request.user
+    context = {
+        "user": request.user
+    }
     return render(request, "mainapp/index.html", context)
 
 
@@ -48,6 +53,7 @@ def register_view(request):
         # TODO: add some verifications here.
         if username and email and password:
             user = User.objects.create_user(username, email, password)
+            shop = Shop.objects.create(user=user)
             user.save()
             context = {"message": "Account creation success!"}
         else:
@@ -125,6 +131,7 @@ def shop_profile(request):
         shop.address = address
 
         logo = request.FILES.get('logoImage', False)
+        print(logo)
         if logo:
             shop.logo = logo
         shop.save()

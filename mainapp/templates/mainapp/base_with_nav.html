@@ -24,12 +24,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
-                {% if user.username %}
-                  <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                {% else %}
-                  <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                  <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-                {% endif %}
+                {% block options %}{% endblock %}
               </div>
             </div>
           </nav>

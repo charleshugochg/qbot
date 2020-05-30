@@ -20,6 +20,8 @@
         </div>
 
         <div class="main-menu row no-gutters">
+            <!-- --------------Customer-------------- -->
+            {% if phone_number %}
             <div class="menu-item col-6">
                 <a href="{% url 'shop_list' %}">
                 <div class="item-detail">
@@ -36,18 +38,11 @@
                 </div>
                 </a>
             </div>
-            <div class="menu-item col-6">
-                <a href="{% url 'shop_profile' %}">
-                <div class="item-detail">
-                    <i class="ion-ios-cog item-color3"></i>
-                    <p>Setting</p>
-                </div>
-                </a>
-            </div>
+
             <div class="menu-item col-6">
                 <a href="#">
                 <div class="item-detail">
-                    <i class="ion-ios-person item-color4"></i>
+                    <i class="ion-ios-telephone item-color4"></i>
                     {% if phone_number %}
                         <p>Ph: {{ phone_number }}</p>
                     {% else %}
@@ -56,6 +51,38 @@
                 </div>
                 </a>
             </div>
+            
+            {% else %}
+            <!-- --------------Owner-------------- -->
+            <div class="menu-item col-6">
+                <a href="{% url 'shop_profile' %}">
+                <div class="item-detail">
+                    <i class="ion-ios-cart item-color3"></i>
+                    <p>Shop Profile</p>
+                </div>
+                </a>
+            </div>
+
+            <div class="menu-item col-6">
+                <a href="#">
+                <div class="item-detail">
+                    <i class="ion-ios-bookmarks item-color2"></i>
+                    <p>Queues & Booking</p>
+                </div>
+                </a>
+            </div>
+            {% endif %}
+
+            <!-- --------------Common-------------- -->
+            <div class="menu-item col-6">
+                <a href="{% url 'logout' %}">
+                <div class="item-detail">
+                    <i class="ion-ios-person item-color4"></i>
+                    <p>Logout</p>
+                </div>
+                </a>
+            </div>
+
         </div>
         
     </div>

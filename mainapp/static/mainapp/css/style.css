@@ -114,13 +114,6 @@ html {
     margin: auto;
 }
 
-@media only screen and (max-width: 600px) {
-    .search-area {
-      margin-top: 10px;
-    }
-  }
-
-
 /* ------------------------- */
 /* Main Menu */
 /* ------------------------- */
@@ -244,7 +237,7 @@ html {
 }
 
 /* ------------------------- */
-/* Contents */
+/* Shop List */
 /* ------------------------- */
 
 .shop-section {
@@ -356,7 +349,6 @@ html {
 }
 
 .c-blue-btn {
-    display: inline-block;
     text-decoration: none;
     color: white;
     background-color: #1AA2DC;
@@ -373,12 +365,30 @@ html {
 }
 
 .book-now-btn {
+    display: inline-block;
     margin-top: 10px;
     padding: 5px 15px;
     font-size: 80%;
     text-transform: uppercase;
 }
 
+.form-check-label {
+    color: rgb(241, 241, 241);
+}
+
+.filter-div {
+    display: none;
+    font-size: 90%;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-left: 48px;
+    padding-bottom: 10px;
+}
+
+.filter-div p {
+    margin-bottom: 5px;
+    color: rgb(241, 241, 241);
+}
 
 /* ------------------------- */
 /* Shop View Details */
@@ -562,6 +572,37 @@ html {
     display: inline-block;
     width: 80px;
 }
+
+/* ------------------------- */
+/* Fisrt Time */
+/* ------------------------- */
+
+.first-container {
+    background-color: rgba(0, 0, 0, 0.459);
+    padding: 10% 12% 14%;
+    margin-top: 30vh;
+    border-radius: 10px;
+}
+
+.btn-first-time {
+    font-size: 98%;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .search-area {
+      margin-top: 10px;
+    }
+
+    .filter-div {
+        display: block;
+    }
+  }
+
+/* ---------------------------------------------------------------------- */
 
 /* Don't come down rio
 /* --------------------------- */
