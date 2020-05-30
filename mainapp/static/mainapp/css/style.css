@@ -219,6 +219,27 @@ html {
     font-size: 110%;
 }
 
+.join-btn {
+    margin: 10px 20px 40px 20px;
+    display: block;
+    font-size: 120%;
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    background-color:rgb(0, 153, 107);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    transition: color 0.2s, border 0.2s, background-color 0.2s;
+}
+
+.join-btn:hover {
+    text-decoration: none;
+    color: rgb(0, 153, 107);
+    border: 1px solid rgb(0, 153, 107);
+    background-color: inherit;
+}
+
 
 /* ------------------------- */
 /* Shop Profile View */

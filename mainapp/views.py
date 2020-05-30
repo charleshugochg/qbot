@@ -76,7 +76,7 @@ def shop(request, shop_id):
 
 def shop_profile(request):
     if not request.user.is_authenticated:
-        context = {"message": "Please create a shop profile, before you edit!"}
+        context = {"message": "Please create an owner account!"}
         return render(request, "mainapp/shop_profile.html", context)
     
     user = request.user
