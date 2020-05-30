@@ -603,3 +603,11 @@ html {
 .queue-active h3 {
     color: #eee;
 }
+
+/* ----------------- */
+/* qr view css */
+/* ----------------- */
+
+#qrcode * {
+    margin: auto;
+}

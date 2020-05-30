@@ -300,7 +300,14 @@ def auth_token_view(request):
         return render(request, "mainapp/auth_status.html", context)
 
 def qr_view(request):
-    pass
+    if request.method != "POST" or len(request.POST['token_id']) == 0:
+        context = {'error': "No token found!"}
+        return render(request, 'mainapp/qr_view.html', context)
+
+    context = {
+        'token_id': request.POST['token_id']
+    }
+    return render(request, 'mainapp/qr_view.html', context)
 
 ## Write views up
 ## Helper functions
