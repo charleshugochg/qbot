@@ -68,13 +68,22 @@ def shop(request, shop_id):
     try:
         shop = Shop.objects.get(pk=shop_id)
         in_serving, in_queue = get_num_customer(shop_id)
+        # phone_number = request.session['phone_number']
+        # status, num_priors = get_customer_status(shop_id, phone_number)
     except Shop.DoesNotExist:
         raise Http404("Shop does not exist")
+    # except KeyError:
+    #     message = "You need to login first."
+    # except Queue.DoesNotExist:
+    #     message = "You can join the queue."
+    # else:
+    #     message = f"Your status {status} and there is {num_priors} ppl in front of you"
     
     context = {
         "shop": shop,
         "in_serving": in_serving,
         "in_queue": in_queue,
+        # "message": message
     }
     return render(request, "mainapp/shop.html", context)
 
@@ -120,7 +129,7 @@ def queue_view(request, shop_id):
         phone_number = request.session['phone_number']
     except KeyError:
         # TODO: redirect to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('queue', args=(shop_id,))})
     else:
         # TODO: validate phone number
         queues = shop.queue_set.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
@@ -144,7 +153,7 @@ def book_view(request, shop_id):
         phone_number = request.session['phone_number']
     except KeyError:
         # TODO: redirect to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('book', args=(shop_id,))})
     else:
         if not 'arrival_time' in request.POST:
             # return error
@@ -170,7 +179,7 @@ def cancel_view(request, shop_id):
         phone_number = request.session['phone_number']
     except KeyError:
         # TODO: return to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('cancel', args=(shop_id,))})
     else:
         queues = shop.queue_set.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
             | Q(phone_number=phone_number, status=Queue.Status.BOOK)
@@ -178,6 +187,9 @@ def cancel_view(request, shop_id):
         for q in queues:
             q.status = Queue.Status.CANCEL
             q.save()
+
+        # TODO: we could change this job to another
+        update_queues(shop_id)
             
         # TODO: return to proper view
         return HttpResponseRedirect(reverse('user'))
@@ -188,7 +200,7 @@ def user_view(request):
         phone_number = request.session['phone_number']
     except KeyError:
         # TODO: return to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('user')})
     else:
         queues = Queue.objects.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE) 
             | Q(phone_number=phone_number, status=Queue.Status.BOOK)
@@ -196,7 +208,8 @@ def user_view(request):
             | Q(phone_number=phone_number, status=Queue.Status.SERVING))
         context = {
             'token_list': queues,
-            'phone_number': request.session['phone_number']
+            'phone_number': request.session['phone_number'],
+            'ret': reverse('user')
         }
     return render(request, 'mainapp/basic_user.html', context)
 
@@ -207,7 +220,7 @@ def success_view(request, shop_id):
         phone_number = request.session['phone_number']
     except KeyError:
         # TODO: return to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('success', args=(shop_id,))})
     else:
         queues = shop.queue_set.filter(phone_number=phone_number, status=Queue.Status.SERVING)
         for q in queues:
@@ -221,16 +234,57 @@ def success_view(request, shop_id):
         return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
 
 
-def reg_ph_view(request):
+def reg_ph_view(request, ret):
     try:
         phone_number = request.POST['phone_number']
     except KeyError:
         # TODO: change tmp form
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': ret})
     else:
         request.session['phone_number'] = phone_number
-        return HttpResponseRedirect(reverse('user'))
+        return HttpResponseRedirect(ret)
 
+def auth_token_view(request):
+    if not request.user.is_authenticated:
+        context = {"error": "Please create an owner account!"}
+        return render(request, "mainapp/auth_token.html", context)
+
+    user = request.user
+    shop = Shop.objects.get(user=request.user)
+
+    if not request.method == 'POST':
+        context = {'shop': shop}
+        return render(request, "mainapp/auth_token.html", context)
+    if len(request.POST['token_id']) == 0:
+        context = {'shop': shop, 'error': "Empty input!"}
+        return render(request, "mainapp/auth_token.html", context)
+
+    try:
+        token_id = request.POST['token_id']
+        # TODO: validate token_id
+        queue = shop.queue_set.get(token_id=token_id, status=Queue.Status.ONCALL)
+    except KeyError:
+        raise Http404("No token found!")
+    except Queue.DoesNotExist:
+        context = {
+            "token_id": token_id,
+            "message": "Invalid!"
+        }
+        return render(request, "mainapp/auth_status.html", context)
+    else:
+        context = {
+            "token_id": token_id,
+            "message": "Success!"
+        }
+        queue.status = Queue.Status.SERVING
+        queue.save()
+
+        # TODO: we could change this job to another
+        update_queues(shop.id)
+
+        return render(request, "mainapp/auth_status.html", context)
+
+## Helper functions
 
 def get_num_customer(shop_id):
     shop = get_object_or_404(Shop, pk=shop_id)
@@ -240,12 +294,20 @@ def get_num_customer(shop_id):
         | Q(status=Queue.Status.ONCALL))
     return len(servings), len(queues)
 
-def get_num_priors(shop_id, phone_number):
-    """ catch Queue.DoesNotExist """
+def get_customer_status(shop_id, phone_number):
+    """ 
+    Return:
+        Queue.Status, len(list_of_prior)
+    Note:
+        catch Queue.DoesNotExist 
+    """
     shop = get_object_or_404(Shop, pk=shop_id)
-    my_queue = shop.queue_set.get(phone_number=phone_number, status=Queue.Status.QUEUE)
+    my_queue = shop.queue_set.get(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
+        | Q(phone_number=phone_number, status=Queue.Status.BOOK)
+        | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
+        | Q(phone_number=phone_number, status=Queue.Status.SERVING))
     queues = shop.queue_set.filter(queue_date__lt=my_queue.queue_date, status=Queue.Status.QUEUE)
-    return len(queues)
+    return my_queue.status, len(queues)
 
 def update_queues(shop_id):
     shop = get_object_or_404(Shop, pk=shop_id)

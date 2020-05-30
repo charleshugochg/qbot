@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block body %}
-    <h2>Phone Number: {{ phone_number }} <a href="{% url 'register_phone_number' %}">Change</a></h2>
+    <h2>Phone Number: {{ phone_number }} <a href="{% url 'register_phone_number' ret %}">Change</a></h2>
     <h4>Token List</h4>
     <ul>
     {% for token in token_list %}

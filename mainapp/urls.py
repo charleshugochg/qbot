@@ -19,7 +19,9 @@ urlpatterns = [
     #ex: /user
     path("user/", views.user_view, name="user"),
     #ex: /regph
-    path("regph/", views.reg_ph_view, name="register_phone_number"),
+    path("regph/ret=<path:ret>/", views.reg_ph_view, name="register_phone_number"),
     #ex: /success/1
     path("success/<int:shop_id>/", views.success_view, name="success"),
+    #ex: /auth_token/075194d3-6885-417e-a8a8-6c931e272f00
+    path("auth_token/", views.auth_token_view, name="auth_token"),
 ]
