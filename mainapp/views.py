@@ -249,9 +249,13 @@ def auth_token_view(request):
     if not request.method == 'POST':
         context = {'shop': shop}
         return render(request, "mainapp/auth_token.html", context)
+    if len(request.POST['token_id']) == 0:
+        context = {'shop': shop, 'error': "Empty input!"}
+        return render(request, "mainapp/auth_token.html", context)
 
     try:
         token_id = request.POST['token_id']
+        # TODO: validate token_id
         queue = shop.queue_set.get(token_id=token_id, status=Queue.Status.ONCALL)
     except KeyError:
         raise Http404("No token found!")
