@@ -319,9 +319,9 @@ def auth_token_view(request):
         return render(request, "mainapp/auth_status.html", context)
 
 def qr_view(request, token_id):
-    # if len(token_id) == 0:
-    #     context = {'error': "No token found!"}
-    #     return render(request, 'mainapp/qr_view.html', context)
+    if len(token_id) == 0:
+        context = {'error': "No token found!"}
+        return render(request, 'mainapp/qr_view.html', context)
 
     context = {
         'token_id': token_id

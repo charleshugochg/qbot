@@ -4,29 +4,40 @@
     Tokens
 {% endblock title %}
 
+{% block pagehead %}
+    Tokens
+{% endblock %}
+
+{% block toggleicon %}
+  <i class="ion-ios-chatboxes-outline custom-icon"></i>
+{% endblock %}
+
+{% block backlink %}
+    <a href="{% url 'index' %}"><i class="ion-ios-arrow-left back-btn"></i></a>
+{% endblock %}
+
 {% block body %}
     {% for token in token_list %}
         <div class="card-info">
             <div class="queue-info {% if token.on_call %}queue-active{% endif %}">
-                <p class="queue-block main-color">Qbot Technology</p>
-                <p class="queue-block">Yangon</p>
-                <h2 class="queue-block">QB{{ token.queue_id }}</h2>
-                <h3 class="queue-block">{{ token.shop_name }}</h3>
-                <div class="">
-                    <a class="btn btn-danger" href="{% url 'cancel' token.shop_id %}" role="button">
-                        Cancel
-                    </a>
+                <div class="row">
+                    <div class="col">
+                        <p class="queue-block main-color">Qbot Technology</p>
+                        <p class="queue-block">Yangon</p>
+                        <h2 class="queue-block">QB{{ token.queue_id }}</h2>
+                        <h3 class="queue-block">{{ token.shop_name }}</h3>
+                    </div>
+                    <div class="col-5">
+                        <a class="btn btn-light float-right m-1" href="{% url 'qr_view' token.id %}" role="button">
+                            <div class="logo-qr"></div>
+                        </a>
+                        <h4 class="float-right m-1">Status: {{ token.status }}</h4>
+                        <h4 class="float-right m-1">Date: 12:00PM</h4>
+                        <a class="btn btn-danger float-right m-1" href="{% url 'cancel' token.shop_id %}" role="button">
+                            Cancel
+                        </a>
+                    </div>
                 </div>
-                <div class="">
-                    <h4>Status: {{ token.status }}</h4>
-                    <h4>Date: 12:00PM</h4>
-                </div>
-                <div class="">
-                    <a class="btn btn-light" href="{% url 'qr_view' token.id %}" role="button">
-                        <div class="logo-qr"></div>
-                    </a>
-                </div>
-                <div></div>
             </div>
         </div>
     {% endfor %}
