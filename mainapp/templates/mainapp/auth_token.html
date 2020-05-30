@@ -1,0 +1,15 @@
+{% extends "mainapp/base_with_nav.html" %}
+
+{% block title %}
+    Authenticate Token
+{% endblock title %}
+
+{% block body %}
+    <h2>Shop Name: {{ shop.name }}</h2>
+    <h3>Insert Token ID?</h3>
+    <p style="color:red;">{{ error }}</p>
+    <form action="{% url 'auth_token' %}" method="POST">
+        {% csrf_token %}
+        <input name="token_id" type="text"/>
+        <input type="submit" value="Submit"/>
+{% endblock body %}

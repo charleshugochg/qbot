@@ -1,0 +1,10 @@
+{% extends "mainapp/base_with_nav.html" %}
+
+{% block title %}
+    Status
+{% endblock title %}
+
+{% block body %}
+    <h3>Token: {{ token_id }} is {{ message }}</h3>
+    <a href="{% url 'auth_token' %}">Again</p>
+{% endblock body %}

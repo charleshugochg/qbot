@@ -181,6 +181,9 @@ def cancel_view(request, shop_id):
         for q in queues:
             q.status = Queue.Status.CANCEL
             q.save()
+
+        # TODO: we could change this job to another
+        update_queues(shop_id)
             
         # TODO: return to proper view
         return HttpResponseRedirect(reverse('user'))
@@ -235,6 +238,43 @@ def reg_ph_view(request, ret):
         request.session['phone_number'] = phone_number
         return HttpResponseRedirect(ret)
 
+def auth_token_view(request):
+    if not request.user.is_authenticated:
+        context = {"error": "Please create an owner account!"}
+        return render(request, "mainapp/auth_token.html", context)
+
+    user = request.user
+    shop = Shop.objects.get(user=request.user)
+
+    if not request.method == 'POST':
+        context = {'shop': shop}
+        return render(request, "mainapp/auth_token.html", context)
+
+    try:
+        token_id = request.POST['token_id']
+        queue = shop.queue_set.get(token_id=token_id, status=Queue.Status.ONCALL)
+    except KeyError:
+        raise Http404("No token found!")
+    except Queue.DoesNotExist:
+        context = {
+            "token_id": token_id,
+            "message": "Invalid!"
+        }
+        return render(request, "mainapp/auth_status.html", context)
+    else:
+        context = {
+            "token_id": token_id,
+            "message": "Success!"
+        }
+        queue.status = Queue.Status.SERVING
+        queue.save()
+
+        # TODO: we could change this job to another
+        update_queues(shop.id)
+
+        return render(request, "mainapp/auth_status.html", context)
+
+## Helper functions
 
 def get_num_customer(shop_id):
     shop = get_object_or_404(Shop, pk=shop_id)
