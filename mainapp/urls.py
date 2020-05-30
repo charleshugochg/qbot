@@ -24,5 +24,5 @@ urlpatterns = [
     path("success/<int:shop_id>/", views.success_view, name="success"),
     #ex: /auth_token/
     path("auth_token/", views.auth_token_view, name="auth_token"),
-    path("qr_view/<uuid:token_id>", views.qr_view, name="qr_view"),
+    path("qr_view/<str:token_id>", views.qr_view, name="qr_view"),
 ]
