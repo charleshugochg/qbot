@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block backlink %}
-    <a href="{% url 'index' %}"><i class="ion-ios-arrow-left back-btn"></i></a>
+    <a href="{% url return_path %}"><i class="ion-ios-arrow-left back-btn"></i></a>
 {% endblock %}
 
 {% block body %}
@@ -23,16 +23,16 @@
             <form action="{% url 'search_result' %}" method="POST">
                 {% csrf_token %}
                 <div class="input-group mb-3">
-                    <input type="text" name="search-value" class="form-control" placeholder="Shop search">
+                    <input type="text" value="{{value}}" name="search-value" class="form-control" placeholder="Shop search">
                     <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" name="path" value="shop_list" type="submit">Find</button>
+                        <button class="btn btn-outline-secondary" name="path" value="shop_list" type="submit">Find</button>
                     </div>
                 </div>
             </form>
         </div>
 
         <div class="shop-section">
-            <h2>Shops</h2>
+            <h2>Results</h2>
             <div class="row no-gutters">
                 {% for shop in shops %}
                 <a href="{% url 'shop' shop.id %}">
@@ -56,6 +56,8 @@
                     </div>
                     </a>
                 </div>
+                {% empty %}
+                    <h4 class="not-result">No match reaults!</h4>
                 {% endfor %}
             </div>
         </div>

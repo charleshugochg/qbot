@@ -23,12 +23,15 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
+                <form action="{% url 'search_result' %}" method="POST">
+                  {% csrf_token %}
                     <div class="input-group search-area">
-                        <input type="text" class="form-control" placeholder="Shop search">
+                        <input type="text" name="search-value" class="form-control" placeholder="Shop search">
                         <div class="input-group-append">
-                          <button class="btn btn-outline-light" type="button">Find</button>
+                          <button class="btn btn-outline-light" name="path" value="index" type="submit">Find</button>
                         </div>
                     </div>
+                  </form>
               </div>
             </div>
           </nav>

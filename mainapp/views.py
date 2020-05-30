@@ -9,6 +9,8 @@ from .models import Shop
 
 from .models import Shop, Queue
 
+import re
+
 # Created by DEV-B.
 
 def index(request):
@@ -62,6 +64,21 @@ def logout_view(request):
 def shop_list(request):
     context = {"shops": Shop.objects.all(),}
     return render(request, "mainapp/shop_list.html", context)
+
+
+def search_result(request):
+    text = request.POST.get("search-value")
+    ret = request.POST.get("path") or 'index'
+    print(text, ret)
+    if not text:
+        return redirect(ret)
+    text = re.escape(text) # make sure there are not regex specials
+    context = {
+        "shops": Shop.objects.filter(name__iregex=r"(^|\s)%s" % text),
+        "value": text,
+        "return_path": ret
+        }
+    return render(request, "mainapp/search_result.html", context)
 
 
 def shop(request, shop_id):

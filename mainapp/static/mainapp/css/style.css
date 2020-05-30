@@ -104,6 +104,16 @@ html {
     margin: 20px 20px;
 }
 
+.not-result {
+    padding-top: 20px;
+    font-weight: 400;
+    display: block;
+    text-align: center;
+    height: 60vh;
+    color: #7D7D7D;
+    margin: auto;
+}
+
 @media only screen and (max-width: 600px) {
     .search-area {
       margin-top: 10px;
