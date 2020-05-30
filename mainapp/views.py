@@ -208,7 +208,9 @@ def tokens_view(request):
             | Q(phone_number=phone_number, status=Queue.Status.SERVING))
         tokens = [
             {
+                'id': q.token_id,
                 'shop_name': q.shop.name,
+                'shop_id': q.shop.id,
                 'queue_id': q.id,
                 'on_call': q.status == Queue.Status.ONCALL,
                 'status': {
@@ -299,13 +301,13 @@ def auth_token_view(request):
 
         return render(request, "mainapp/auth_status.html", context)
 
-def qr_view(request):
-    if request.method != "POST" or len(request.POST['token_id']) == 0:
-        context = {'error': "No token found!"}
-        return render(request, 'mainapp/qr_view.html', context)
+def qr_view(request, token_id):
+    # if len(token_id) == 0:
+    #     context = {'error': "No token found!"}
+    #     return render(request, 'mainapp/qr_view.html', context)
 
     context = {
-        'token_id': request.POST['token_id']
+        'token_id': token_id
     }
     return render(request, 'mainapp/qr_view.html', context)
 
