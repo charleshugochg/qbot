@@ -16,12 +16,13 @@ urlpatterns = [
     path("book/<int:shop_id>/", views.book_view, name="book"),
     #ex: /cancel/1
     path("cancel/<int:shop_id>/", views.cancel_view, name="cancel"),
-    #ex: /user
-    path("user/", views.user_view, name="user"),
+    #ex: /tokens
+    path("tokens/", views.tokens_view, name="tokens"),
     #ex: /regph
     path("regph/ret=<path:ret>/", views.reg_ph_view, name="register_phone_number"),
     #ex: /success/1
     path("success/<int:shop_id>/", views.success_view, name="success"),
-    #ex: /auth_token/075194d3-6885-417e-a8a8-6c931e272f00
+    #ex: /auth_token/
     path("auth_token/", views.auth_token_view, name="auth_token"),
+    path("qr_view/", views.qr_view, name="qr_view"),
 ]

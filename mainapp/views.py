@@ -192,26 +192,41 @@ def cancel_view(request, shop_id):
         update_queues(shop_id)
             
         # TODO: return to proper view
-        return HttpResponseRedirect(reverse('user'))
+        return HttpResponseRedirect(reverse('tokens'))
 
 
-def user_view(request):
+def tokens_view(request):
     try:
         phone_number = request.session['phone_number']
     except KeyError:
         # TODO: return to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('user')})
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('tokens')})
     else:
         queues = Queue.objects.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE) 
             | Q(phone_number=phone_number, status=Queue.Status.BOOK)
             | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
             | Q(phone_number=phone_number, status=Queue.Status.SERVING))
+        tokens = [
+            {
+                'shop_name': q.shop.name,
+                'queue_id': q.id,
+                'on_call': q.status == Queue.Status.ONCALL,
+                'status': {
+                    Queue.Status.QUEUE: "Waiting",
+                    Queue.Status.BOOK: "Booked",
+                    Queue.Status.ONCALL: "Calling",
+                    Queue.Status.SERVING: "Serving",
+                }[q.status],
+            }
+            for q in queues
+        ]
+
         context = {
-            'token_list': queues,
+            'token_list': tokens,
             'phone_number': request.session['phone_number'],
-            'ret': reverse('user')
+            'ret': reverse('tokens')
         }
-    return render(request, 'mainapp/basic_user.html', context)
+    return render(request, 'mainapp/tokens.html', context)
 
 def success_view(request, shop_id):
     shop = get_object_or_404(Shop, pk=shop_id)
@@ -284,6 +299,10 @@ def auth_token_view(request):
 
         return render(request, "mainapp/auth_status.html", context)
 
+def qr_view(request):
+    pass
+
+## Write views up
 ## Helper functions
 
 def get_num_customer(shop_id):
