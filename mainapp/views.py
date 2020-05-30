@@ -63,13 +63,22 @@ def shop(request, shop_id):
     try:
         shop = Shop.objects.get(pk=shop_id)
         in_serving, in_queue = get_num_customer(shop_id)
+        # phone_number = request.session['phone_number']
+        # status, num_priors = get_customer_status(shop_id, phone_number)
     except Shop.DoesNotExist:
         raise Http404("Shop does not exist")
+    # except KeyError:
+    #     message = "You need to login first."
+    # except Queue.DoesNotExist:
+    #     message = "You can join the queue."
+    # else:
+    #     message = f"Your status {status} and there is {num_priors} ppl in front of you"
     
     context = {
         "shop": shop,
         "in_serving": in_serving,
         "in_queue": in_queue,
+        # "message": message
     }
     return render(request, "mainapp/shop.html", context)
 
@@ -221,7 +230,7 @@ def reg_ph_view(request, ret):
         phone_number = request.POST['phone_number']
     except KeyError:
         # TODO: change tmp form
-        return render(request, 'mainapp/basic_form_ph_no.html', ret)
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': ret})
     else:
         request.session['phone_number'] = phone_number
         return HttpResponseRedirect(ret)
@@ -235,12 +244,20 @@ def get_num_customer(shop_id):
         | Q(status=Queue.Status.ONCALL))
     return len(servings), len(queues)
 
-def get_num_priors(shop_id, phone_number):
-    """ catch Queue.DoesNotExist """
+def get_customer_status(shop_id, phone_number):
+    """ 
+    Return:
+        Queue.Status, len(list_of_prior)
+    Note:
+        catch Queue.DoesNotExist 
+    """
     shop = get_object_or_404(Shop, pk=shop_id)
-    my_queue = shop.queue_set.get(phone_number=phone_number, status=Queue.Status.QUEUE)
+    my_queue = shop.queue_set.get(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
+        | Q(phone_number=phone_number, status=Queue.Status.BOOK)
+        | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
+        | Q(phone_number=phone_number, status=Queue.Status.SERVING))
     queues = shop.queue_set.filter(queue_date__lt=my_queue.queue_date, status=Queue.Status.QUEUE)
-    return len(queues)
+    return my_queue.status, len(queues)
 
 def update_queues(shop_id):
     shop = get_object_or_404(Shop, pk=shop_id)
