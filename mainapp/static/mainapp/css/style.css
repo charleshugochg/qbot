@@ -493,3 +493,20 @@ html {
     margin-left: -2em;
     vertical-align: middle;
 }
+
+
+/* ----------------- */
+/* token card css */
+/* ----------------- */
+
+.queue-active {
+    background-color:rgb(0, 173, 121);
+}
+
+.queue-active * {
+    color: #eee;
+}
+
+.queue-active h3 {
+    color: #eee;
+}
