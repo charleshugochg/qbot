@@ -41,7 +41,7 @@ html {
 /* ------------------------- */
 
 .main-nav img {
-    height: 50px;
+    height: 45px;
     width: auto;
 }
 
@@ -285,12 +285,14 @@ html {
 .shop-container img {
     display: inline-block;
     float: left;
-    width: 150px;
+    max-width: 160px;
+    width: 22%;
+    height: auto;
 }
 
 .shop-detail-text {
     display: inline-block;
-    margin-left: 40px;
+    margin-left: 20px;
 }
 
 .shop-detail-text p {
