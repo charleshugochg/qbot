@@ -6,7 +6,7 @@
 
 {% block body %}
     <h1>What is your phone number?</h1>
-    <form action="{% url 'register_phone_number' %}" method="POST">
+    <form action="{% url 'register_phone_number' ret %}" method="POST">
         {% csrf_token %}
         <input name="phone_number" type="number"/>
         <input type="submit" value="Submit"/>

@@ -114,7 +114,7 @@ def queue_view(request, shop_id):
         phone_number = request.session['phone_number']
     except KeyError:
         # TODO: redirect to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('queue', args=(shop_id,))})
     else:
         # TODO: validate phone number
         queues = shop.queue_set.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
@@ -138,7 +138,7 @@ def book_view(request, shop_id):
         phone_number = request.session['phone_number']
     except KeyError:
         # TODO: redirect to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('book', args=(shop_id,))})
     else:
         if not 'arrival_time' in request.POST:
             # return error
@@ -164,7 +164,7 @@ def cancel_view(request, shop_id):
         phone_number = request.session['phone_number']
     except KeyError:
         # TODO: return to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('cancel', args=(shop_id,))})
     else:
         queues = shop.queue_set.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
             | Q(phone_number=phone_number, status=Queue.Status.BOOK)
@@ -182,7 +182,7 @@ def user_view(request):
         phone_number = request.session['phone_number']
     except KeyError:
         # TODO: return to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('user')})
     else:
         queues = Queue.objects.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE) 
             | Q(phone_number=phone_number, status=Queue.Status.BOOK)
@@ -190,7 +190,8 @@ def user_view(request):
             | Q(phone_number=phone_number, status=Queue.Status.SERVING))
         context = {
             'token_list': queues,
-            'phone_number': request.session['phone_number']
+            'phone_number': request.session['phone_number'],
+            'ret': reverse('user')
         }
     return render(request, 'mainapp/basic_user.html', context)
 
@@ -201,7 +202,7 @@ def success_view(request, shop_id):
         phone_number = request.session['phone_number']
     except KeyError:
         # TODO: return to proper view
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', {'ret': reverse('success', args=(shop_id,))})
     else:
         queues = shop.queue_set.filter(phone_number=phone_number, status=Queue.Status.SERVING)
         for q in queues:
@@ -215,15 +216,15 @@ def success_view(request, shop_id):
         return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
 
 
-def reg_ph_view(request):
+def reg_ph_view(request, ret):
     try:
         phone_number = request.POST['phone_number']
     except KeyError:
         # TODO: change tmp form
-        return render(request, 'mainapp/basic_form_ph_no.html')
+        return render(request, 'mainapp/basic_form_ph_no.html', ret)
     else:
         request.session['phone_number'] = phone_number
-        return HttpResponseRedirect(reverse('user'))
+        return HttpResponseRedirect(ret)
 
 
 def get_num_customer(shop_id):
