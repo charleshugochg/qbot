@@ -126,6 +126,7 @@ def shop(request, shop_id):
         raise Http404("Shop does not exist")
     except KeyError:
         status = None
+        num_priors = 0
     else:
         status, num_priors = get_customer_status(shop_id, phone_number)
     context = {
