@@ -451,7 +451,7 @@ html {
 .shop-container img {
     display: inline-block;
     float: left;
-    max-width: 160px;
+    max-width: 150px;
     width: 22%;
     height: auto;
 }
@@ -468,7 +468,7 @@ html {
 }
 
 .shop-detail-text span {
-    font-size: 90%;
+    font-size: 98%;
     color: rgb(24, 141, 192);
 }
 
@@ -508,7 +508,8 @@ html {
 
 .counter-info {
     margin-left: 10px;
-    font-size: 110%;
+    font-weight: 500;
+    font-size: 100%;
     padding-top: 36px;
     display: inline-block;
 }
@@ -664,6 +665,7 @@ html {
     }
   }
 
+
 /* ---------------------------------------------------------------------- */
 
 /* Don't come down rio
@@ -673,8 +675,8 @@ html {
 
 .qrcode-text-btn {
     display: inline-block;
-    height: 1em;
-    width: 1em;
+    height: 1.3em;
+    width: 1.3em;
     background: url(../images/qr_icon.svg) 50% 50% no-repeat;
     cursor: pointer;
 }
@@ -696,7 +698,7 @@ html {
 .qrcode-text + .qrcode-text-btn {
     width: 1.7em;
     margin: auto;
-    margin-left: -2em;
+    margin-left: -2.5em;
     vertical-align: middle;
 }
 
@@ -730,4 +732,70 @@ html {
 
 #qrcode * {
     margin: auto;
+}
+
+
+
+/*--------------------------------------------------------------------------*/
+/* ------------------------- */
+/* Authencation */
+/* ------------------------- */
+
+.center-row {
+    /* background-color: rgb(241, 241, 241); */
+    margin: 0px 10px 20px 10px;
+}
+
+.center-row h1{
+    text-align: center;
+    margin-bottom: 30px;
+    color: #000;
+    font-size: 160%;
+    margin-top: 20px;
+}
+
+.center-row h4{
+    margin-bottom: 80px;
+    color: #7D7D7D;
+    font-size: 130%;
+}
+
+.center-row h5{
+    text-align: center;
+    font-size: 110%;
+}
+
+.qr-input-form {
+    
+}
+
+.qrcode-text {
+    margin-left: 11%;
+    width: 78%;
+    margin-top: 10px;
+    height: 36px;
+    margin-bottom: 10px;
+}
+
+.custom-qrcode-in {
+    border: 1px solid #7D7D7D;
+    border-radius: 5px;
+}
+
+.custom-qrcode-in:focus {
+    outline: none;
+    border: 1px solid #1AA2DC;
+    box-shadow: 0px 0px 3px #1AA2DC;
+}
+
+.qr-btn {
+    display: inline-block;
+    font-weight: 500;
+    padding-left: 22px;
+    margin-bottom: 100px;
+    color: white;
+}
+
+.mg-coustom {
+    margin-top: 30px;
 }

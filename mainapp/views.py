@@ -56,11 +56,12 @@ def register_view(request):
         username = request.POST["username"]
         email = request.POST["email"]
         password = request.POST["password"]
+        shop_name = request.POST["shop_name"]
         
         # TODO: add some verifications here.
         try:
             user = User.objects.create_user(username, email, password)
-            shop = Shop.objects.create(user=user)
+            shop = Shop.objects.create(user=user, name=shop_name)
             user.save()
             context = {
                 "success": True,
@@ -332,7 +333,8 @@ def auth_token_view(request):
     except Queue.DoesNotExist:
         context = {
             "token_id": token_id,
-            "message": "Invalid!"
+            "message": "Invalid!",
+            "denied":True,
         }
         return render(request, "mainapp/auth_status.html", context)
     else:
