@@ -261,6 +261,7 @@ def tokens_view(request):
                 'shop_id': q.shop.id,
                 'queue_id': q.id,
                 'on_call': q.status == Queue.Status.ONCALL,
+                'on_serving': q.status == Queue.Status.SERVING,
                 'status': {
                     Queue.Status.QUEUE: "Waiting",
                     Queue.Status.BOOK: "Booked",
@@ -296,7 +297,7 @@ def success_view(request, shop_id):
         update_queues(shop_id)
         
         # TODO: redirect to proper view
-        return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
+        return HttpResponseRedirect(reverse('index', args=()))
 
 
 def register_phone_view(request, ret):
@@ -365,7 +366,7 @@ def qr_view(request, token_id):
 def get_most_important_token(phone_number):
     token = {}
     # TODO: validate phone number
-    CASE_SQL = '(case when status="ONCALL" then 1 when status="QUEUE" then 2 when status="BOOK" then 3 when status="SERVING" then 4 end)'
+    CASE_SQL = '(case when status="SERVING" then 1 when status="ONCALL" then 2 when status="QUEUE" then 3 when status="BOOK" then 4 end)'
     queues = Queue.objects.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE) 
         | Q(phone_number=phone_number, status=Queue.Status.BOOK)
         | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
@@ -380,6 +381,7 @@ def get_most_important_token(phone_number):
             'shop_name': queues[0].shop.name,
             'shop_id': queues[0].shop.id,
             'on_call': queues[0].status == Queue.Status.ONCALL,
+            'on_serving': queues[0].status == Queue.Status.SERVING,
             'status': {
                 Queue.Status.QUEUE: "Waiting",
                 Queue.Status.BOOK: "Booked",
