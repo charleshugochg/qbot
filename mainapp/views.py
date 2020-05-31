@@ -23,9 +23,15 @@ def index(request):
             return render(request, "mainapp/index.html", context)
         return render(request, "mainapp/first_time.html")
 
+    shop = Shop.objects.get(user=request.user)
+    in_serving, in_queue = get_num_customer(shop.id)
     context = {
-        "user": request.user
+        "user": request.user,
+        "shop": shop,
+        "in_serving": in_serving,
+        "in_queue": in_queue,
     }
+    
     return render(request, "mainapp/index.html", context)
 
 
@@ -38,7 +44,7 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse('index'))
         else:
-            return render(request, "mainapp/login.html", {"message": "Invalid credentials."})
+            return render(request, "mainapp/login.html", {"message": "Username or password incorrect!"})
     return render(request, "mainapp/login.html")
 
 
@@ -51,7 +57,7 @@ def register_view(request):
         password = request.POST["password"]
         
         # TODO: add some verifications here.
-        if username and email and password:
+        try:
             user = User.objects.create_user(username, email, password)
             shop = Shop.objects.create(user=user)
             user.save()
@@ -59,8 +65,8 @@ def register_view(request):
                 "success": True,
                 "message": "Account creation success! Redirect to shop profile."
                 }
-        else:
-            context = {"message": "Invalid credentials."}
+        except:
+            context = {"message": "Please try different username."}
 
     return render(request, "mainapp/register.html", context)
 
