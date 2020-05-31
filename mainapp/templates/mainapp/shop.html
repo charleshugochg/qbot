@@ -48,7 +48,7 @@
               </div>
               {% if user.username %}
               <div class="row">
-                <button type="button" class="btn btn-outline-secondary" disabled>Please login with user account to access the queue</button>
+                <button type="button" class="btn btn-outline-secondary" disabled>login with user account to join</button>
               </div>
               {% else %}
                 <a href="{% url 'queue' shop.id %}" class="join-btn">Join</a>

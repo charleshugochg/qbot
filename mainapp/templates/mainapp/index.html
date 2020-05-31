@@ -8,6 +8,7 @@
 {% block body %}
     <div class="container-custom no-gutters">
         {% if user.username %}
+        <a href="{% url 'shop' shop.id %}" style="text-decoration: none;">
             <div class="card-info">
                 <div class="home-queue-info">
                     <div class="home-quebook-info col-sm-12">
@@ -27,6 +28,7 @@
                     </div>
                 </div>
             </div>
+        </a>
             
         {% else %}
 
@@ -39,7 +41,7 @@
                     <h2 class="queue-block">QB{{ token.queue_id }}</h2>
                     <h3 class="queue-block">{{ token.shop_name }}</h3>
                     <h4>Status: {{ token.status }}</h4>
-                    <h4>Date: 12:00PM</h4>
+                    <h4>Date: 12:30PM</h4>
                 </div>
             </div>
         {% endif %}
