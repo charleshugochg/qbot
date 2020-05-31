@@ -46,7 +46,13 @@
                 <p class="counter-text">{{ in_queue }}</p>
                 <p class="counter-info">People in queue</p>
               </div>
-              <a href="{% url 'queue' shop.id %}" class="join-btn">Join</a>
+              {% if user.username %}
+              <div class="row">
+                <button type="button" class="btn btn-outline-secondary" disabled>Please login with user account to access the queue</button>
+              </div>
+              {% else %}
+                <a href="{% url 'queue' shop.id %}" class="join-btn">Join</a>
+              {% endif %}
             </div>
 
             <div class="quebook-info col-sm-6 no-gutters">
@@ -61,7 +67,12 @@
                       <option value="3">1:00PM</option>
                     </select>
                 </div>
-                <a href="#" class="book-btn">Book</a>
+                {% if user.username %}
+                <h2>&nbsp;</h2>
+                {% else %}
+                  <a href="#" class="book-btn">Book</a>
+                {% endif %}
+
               </form>
                 
               </div>
