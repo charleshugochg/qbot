@@ -33,12 +33,12 @@
             <!-- Here your card Charles -->
 
             <div class="card-info">
-                <div class="queue-info">
+                <div class="queue-info {% if token.on_call %}queue-active{% endif %}">
                     <p class="queue-block main-color">Qbot Technology</p>
                     <p class="queue-block">Yangon</p>
-                    <h2 class="queue-block">CS229</h2>
-                    <h3 class="queue-block">Shop Name</h3>
-                    <h4>Status: Waiting</h4>
+                    <h2 class="queue-block">QB{{ token.queue_id }}</h2>
+                    <h3 class="queue-block">{{ token.shop_name }}</h3>
+                    <h4>Status: {{ token.status }}</h4>
                     <h4>Date: 12:00PM</h4>
                 </div>
             </div>
@@ -65,7 +65,7 @@
             </div>
 
             <div class="menu-item col-6">
-                <a href="#">
+                <a href="{% url 'register_phone' '/' %}">
                 <div class="item-detail">
                     <i class="ion-ios-telephone item-color5"></i>
                     {% if phone_number %}
@@ -89,10 +89,10 @@
             </div>
 
             <div class="menu-item col-6">
-                <a href="#">
+                <a href="{% url 'auth_token' %}">
                 <div class="item-detail">
-                    <i class="ion-ios-bookmarks item-color2"></i>
-                    <p>Queues & Booking</p>
+                    <i class="ion-qr-scanner item-color2"></i>
+                    <p>Auth Tokens</p>
                 </div>
                 </a>
             </div>

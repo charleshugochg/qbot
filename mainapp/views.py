@@ -19,6 +19,7 @@ def index(request):
         if phone:
             context = {
                 "phone_number": phone,
+                "token": get_most_important_token(phone)
                 }
             return render(request, "mainapp/index.html", context)
         return render(request, "mainapp/first_time.html")
@@ -346,6 +347,30 @@ def qr_view(request, token_id):
 
 ## Write views up
 ## Helper functions
+def get_most_important_token(phone_number):
+    token = {}
+    # TODO: validate phone number
+    CASE_SQL = '(case when status="ONCALL" then 1 when status="QUEUE" then 2 when status="BOOK" then 3 when status="SERVING" then 4 end)'
+    queues = Queue.objects.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE) 
+        | Q(phone_number=phone_number, status=Queue.Status.BOOK)
+        | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
+        | Q(phone_number=phone_number, status=Queue.Status.SERVING)).extra(
+            select={'status_order': CASE_SQL}, 
+            order_by=['status_order']
+        )
+    if queues:
+        token = {
+            'queue_id': queues[0].id,
+            'shop_name': queues[0].shop.name,
+            'on_call': queues[0].status == Queue.Status.ONCALL,
+            'status': {
+                Queue.Status.QUEUE: "Waiting",
+                Queue.Status.BOOK: "Booked",
+                Queue.Status.ONCALL: "Calling",
+                Queue.Status.SERVING: "Serving",
+            }[queues[0].status]
+        }
+    return token
 
 def get_num_customer(shop_id):
     shop = get_object_or_404(Shop, pk=shop_id)
