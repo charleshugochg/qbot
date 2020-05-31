@@ -467,6 +467,7 @@ html {
 }
 
 .shop-detail-text {
+    width: 70%;
     display: inline-block;
     margin-left: 20px;
 }
@@ -477,10 +478,19 @@ html {
     margin-bottom: 5px;
 }
 
-.shop-detail-text span {
+/* .shop-detail-text span {
     font-size: 98%;
     color: rgb(24, 141, 192);
+} */
+
+.outer-span {
+    color: rgb(24, 141, 192);
 }
+
+.inner-span {
+    color: black;
+}
+
 
 .quebook-info {
     padding-left: 20px;
