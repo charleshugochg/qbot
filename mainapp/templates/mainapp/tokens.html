@@ -17,6 +17,7 @@
 {% endblock %}
 
 {% block body %}
+<div class="your-token-contain" style="padding-top: 10px; padding-bottom: 20px;">
     {% for token in token_list %}
         {% comment %} <div class="card-info">
             <div class="queue-info {% if token.on_call %}queue-active{% endif %}">
@@ -76,5 +77,8 @@
                 <div id="cross"></div>
             </a>
         </div>
+    {% empty %}
+        <h2 class="not-result">No token</h2>
     {% endfor %}
+</div>
 {% endblock body %}
