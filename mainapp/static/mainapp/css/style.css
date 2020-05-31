@@ -86,7 +86,6 @@ html {
     border: none !important;
 }
 
-
 /* ------------------------- */
 /* Searching */
 /* ------------------------- */
@@ -209,6 +208,7 @@ html {
     margin-left: auto;
     margin-right: auto;
     margin-top: 5px;
+    padding-top: 4px;
     color: #fff;
 }
 
@@ -419,14 +419,14 @@ html {
 }
 
 .shop-detail-text p {
-    font-size: 95%;
+    font-size: 98%;
     font-weight: 500;
     margin-bottom: 5px;
 }
 
 .shop-detail-text span {
-    font-size: 105%;
-    color: rgb(148, 148, 148);
+    font-size: 90%;
+    color: rgb(24, 141, 192);
 }
 
 .quebook-info {
@@ -452,8 +452,8 @@ html {
     float: left;
     text-align: center;
     margin-top: 10px;
-    padding-top: 5px;
-    font-size: 220%;
+    padding-top: 12px;
+    font-size: 245%;
     font-weight: 500;
     width: 80px;
     height: 80px;
@@ -573,6 +573,10 @@ html {
     width: 80px;
 }
 
+.image-form {
+    margin-top: 20px;
+}
+
 /* ------------------------- */
 /* Fisrt Time */
 /* ------------------------- */
@@ -580,7 +584,7 @@ html {
 .first-container {
     background-color: inherit;
     padding: 10% 12% 14%;
-    margin-top: 20vh;
+    margin-top: 10vh;
     border-radius: 10px;
 }
 

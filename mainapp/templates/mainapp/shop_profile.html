@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block toggleicon %}
-  <i class="ion-ios-chatboxes-outline custom-icon"></i>
+    <a href="{% url 'index' %}"><i class="ion-ios-home custom-icon"></i></a>
 {% endblock %}
 
 {% block backlink %}
@@ -59,15 +59,19 @@
                             <div class="form-group row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Address</label>
                                 <div class="col-md-6">
-                                    <input type="text" name="shop_address" value="{{shop.address}}" placeholder="123/Shop Road" class="form-control">
+                                    <input type="text" name="shop_address" value="{{shop.address}}" placeholder="Hlagin Township" class="form-control">
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="exampleFormControlFile1">Logo</label>
-                                <img class="logo-profile-view" src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
-                                <input type="file" name="logoImage" class="form-control-file" id="exampleFormControlFile1">
-                              </div>
+                            <div class="form-group row">
+                                <label for="exampleFormControlFile1" class="col-md-4 col-form-label text-md-right">Logo</label>
+                                <div class="col-md-2">
+                                    <img class="logo-profile-view" src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
+                                </div>
+                                    <div class="col-md-4">
+                                        <input type="file" name="logoImage" class="image-form form-control-file" accept="image/x-png,image/gif,image/jpeg" id="exampleFormControlFile1">
+                                    </div>
+                            </div>
 
                             <div class="form-group row">
                                 <div class="col-md-6 offset-md-4">
