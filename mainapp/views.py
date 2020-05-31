@@ -78,7 +78,20 @@ def logout_view(request):
 
 
 def shop_list(request):
-    context = {"shops": Shop.objects.all(),}
+    shops = [
+        {
+            'id': s.id,
+            'logo': s.logo,
+            'name': s.name,
+            'address': s.address,
+            'capacity': s.capacity,
+            'num_in_queue': get_num_customer(s.id)[1]
+        }
+        for s in Shop.objects.all()
+    ]
+    context = {
+        "shops": shops,
+    }
     return render(request, "mainapp/shop_list.html", context)
 
 
@@ -177,7 +190,7 @@ def queue_view(request, shop_id):
         update_queues(shop_id)
         
         # TODO: redirect to proper view
-        return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
+        return HttpResponseRedirect(reverse('tokens', args=()))
 
 
 def book_view(request, shop_id):
