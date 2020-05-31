@@ -112,6 +112,7 @@
         </div>
     </div>
 
+    {% if user.username %}
     <form id="hidden-form" style="display: none;" action="{% url 'shop' shop.id%}" method="POST">
         {% csrf_token %}
         <input type="text" name="ret" value="index">
@@ -125,5 +126,6 @@
             }
         });
     </script>
+    {% endif %}
 
 {% endblock %}
