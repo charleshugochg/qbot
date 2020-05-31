@@ -1,15 +1,17 @@
 {% extends "mainapp/base.html" %}
+{% load static %}
 
 {% block title %}
     First
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid" style="background-image: linear-gradient(to bottom ,#1AA2DC, rgb(24, 141, 192)); height: 100vh;">
+    <div class="container-fluid" style="background-color: rgb(255, 255, 255); height: 100vh;">
         <h1>&nbsp;</h1>
         <div class="first-container">
-            <a class="join-btn btn-first-time" href="{% url 'register' %}">login as owner</a>
-            <a class="book-btn btn-first-time" href="{% url 'tokens' %}">login as user</a>
+            <img src="{% static 'mainapp/images/logo.png' %}" alt="Qbot logo">
+            <a class="btn btn-primary btn-first-time" href="{% url 'register' %}">login as owner</a>
+            <a class="btn btn-outline-primary btn-first-time" href="{% url 'tokens' %}">login as user</a>
         </div>
     </div>
 {% endblock %}

@@ -578,18 +578,29 @@ html {
 /* ------------------------- */
 
 .first-container {
-    background-color: rgba(0, 0, 0, 0.459);
+    background-color: inherit;
     padding: 10% 12% 14%;
-    margin-top: 30vh;
+    margin-top: 20vh;
     border-radius: 10px;
 }
 
 .btn-first-time {
-    font-size: 98%;
+    display: block;
+    font-size: 90%;
     font-weight: 500;
     text-transform: uppercase;
     margin-bottom: 0;
+    margin-top: 10px;
 }
+
+.first-container img {
+    display: block;
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+}
+
 
 
 @media only screen and (max-width: 600px) {
