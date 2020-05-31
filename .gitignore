@@ -1,5 +1,6 @@
 *.pyc
 /.vscode
+/db.sqlite3
 /mainapp/migrations
 /mainapp/__pycache__
 /queuemgmt/__pycache__
