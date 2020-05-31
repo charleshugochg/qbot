@@ -125,9 +125,9 @@ def shop(request, shop_id):
     #     message = "You can join the queue."
     # else:
     #     message = f"Your status {status} and there is {num_priors} ppl in front of you"
-    
     context = {
         "shop": shop,
+        "ret": request.POST.get('ret') or 'shop_list',
         "in_serving": in_serving,
         "in_queue": in_queue,
         # "message": message

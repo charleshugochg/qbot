@@ -8,7 +8,7 @@
 {% block body %}
     <div class="container-custom no-gutters">
         {% if user.username %}
-        <a href="{% url 'shop' shop.id %}" style="text-decoration: none;">
+        <a id="to-owner-shop" style="text-decoration: none;">
             <div class="card-info">
                 <div class="home-queue-info">
                     <div class="home-quebook-info col-sm-12">
@@ -109,9 +109,21 @@
                 </div>
                 </a>
             </div>
-
         </div>
-        
     </div>
+
+    <form id="hidden-form" style="display: none;" action="{% url 'shop' shop.id%}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="ret" value="index">
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            h_form = document.getElementById('hidden-form');
+            document.getElementById('to-owner-shop').onclick = function() {
+                h_form.submit();
+            }
+        });
+    </script>
 
 {% endblock %}
