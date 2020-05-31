@@ -5,22 +5,48 @@
     Authenticate Token
 {% endblock title %}
 
+{% block pagehead %}
+    Authentication
+{% endblock %}
+
+{% block toggleicon %}
+    <a href="{% url 'index' %}"><i class="ion-ios-home custom-icon"></i></a>
+{% endblock %}
+
+{% block backlink %}
+    <a href="{% url 'index' %}"><i class="ion-ios-arrow-left back-btn"></i></a>
+{% endblock %}
+
 {% block body %}
-    <h2>Shop Name: {{ shop.name }}</h2>
-    <h3>Insert Token ID?</h3>
-    <p style="color:red;">{{ error }}</p>
-    <form action="{% url 'auth_token' %}" method="POST">
-        {% csrf_token %} 
-        <input name="token_id" type=text class=qrcode-text>
-        <label class=qrcode-text-btn>
-            <input type=file
-                accept="image/*"
-                capture=environment
-                onchange="openQRCamera(this);"
-                tabindex=-1>
-        </label>
-        <input type="submit" class=qrcode-text value="Submit"/>
-    </form>
+<div class="shop-container">
+    <div class="center-row">
+        <h4>Shop Name : {{ shop.name }}</h4>
+        <h5>Insert Token ID?</h5>
+
+        <form action="{% url 'auth_token' %}" method="POST">
+            {% csrf_token %}
+            <div class="qr-input-form">
+            <input name="token_id" type="text" class="qrcode-text custom-qrcode-in">
+            <label class="qrcode-text-btn">
+                <input type=file
+                    accept="image/*"
+                    capture=environment
+                    onchange="openQRCamera(this);"
+                    tabindex=-1>
+            </label>
+            </div>
+
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endif %}
+            
+            <input type="submit" class="btn qrcode-text c-blue-btn qr-btn" value="Submit"/>
+        </form>
+    </div>
+</div>
+
     <script>
     function openQRCamera(node) {
         var reader = new FileReader();

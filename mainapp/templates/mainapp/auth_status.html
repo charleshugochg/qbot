@@ -4,7 +4,30 @@
     Status
 {% endblock title %}
 
+{% block pagehead %}
+    Authentication
+{% endblock %}
+
+{% block toggleicon %}
+    <a href="{% url 'index' %}"><i class="ion-ios-home custom-icon"></i></a>
+{% endblock %}
+
+{% block backlink %}
+    <a href="{% url 'index' %}"><i class="ion-ios-arrow-left back-btn"></i></a>
+{% endblock %}
+
 {% block body %}
-    <h3>Token: {{ token_id }} is {{ message }}</h3>
-    <a href="{% url 'auth_token' %}">Again</p>
+    <div class="shop-container">
+        <div class="center-row">
+            {% if denied %}
+                <h1 class="text-danger">Denied</h1>
+            {% else %}
+                <h1 class="text-success">Success</h1>
+            {% endif %}
+            <h5>Token: {{ token_id }} is {{ message }}</h5>
+            <a href="{% url 'auth_token' %}" class="btn qrcode-text c-blue-btn qr-btn mg-coustom">Try Again</a>
+        </div>
+    </div>
+
+
 {% endblock body %}
