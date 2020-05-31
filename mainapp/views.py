@@ -79,6 +79,11 @@ def logout_view(request):
 
 
 def shop_list(request):
+    try:
+        phone_number = request.session['phone_number']
+    except KeyError:
+        return Http404('You need to login as user.')
+
     shops = [
         {
             'id': s.id,
@@ -86,7 +91,8 @@ def shop_list(request):
             'name': s.name,
             'address': s.address,
             'capacity': s.capacity,
-            'num_in_queue': get_num_customer(s.id)[1]
+            'num_in_queue': get_num_customer(s.id)[1],
+            'customer_status': get_customer_status(s.id, phone_number)[0]
         }
         for s in Shop.objects.all()
     ]
@@ -120,22 +126,20 @@ def shop(request, shop_id):
     try:
         shop = Shop.objects.get(pk=shop_id)
         in_serving, in_queue = get_num_customer(shop_id)
-        # phone_number = request.session['phone_number']
-        # status, num_priors = get_customer_status(shop_id, phone_number)
+        phone_number = request.session['phone_number']
     except Shop.DoesNotExist:
         raise Http404("Shop does not exist")
-    # except KeyError:
-    #     message = "You need to login first."
-    # except Queue.DoesNotExist:
-    #     message = "You can join the queue."
-    # else:
-    #     message = f"Your status {status} and there is {num_priors} ppl in front of you"
+    except KeyError:
+        status = None
+    else:
+        status, num_priors = get_customer_status(shop_id, phone_number)
     context = {
         "shop": shop,
         "ret": request.POST.get('ret') or 'shop_list',
         "in_serving": in_serving,
         "in_queue": in_queue,
-        # "message": message
+        "status": status,
+        "num_priors": num_priors
     }
     return render(request, "mainapp/shop.html", context)
 
@@ -266,6 +270,7 @@ def tokens_view(request):
                 'shop_id': q.shop.id,
                 'queue_id': q.id,
                 'on_call': q.status == Queue.Status.ONCALL,
+                'on_serving': q.status == Queue.Status.SERVING,
                 'status': {
                     Queue.Status.QUEUE: "Waiting",
                     Queue.Status.BOOK: "Booked",
@@ -301,7 +306,7 @@ def success_view(request, shop_id):
         update_queues(shop_id)
         
         # TODO: redirect to proper view
-        return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
+        return HttpResponseRedirect(reverse('index', args=()))
 
 
 def register_phone_view(request, ret):
@@ -370,7 +375,7 @@ def qr_view(request, token_id):
 def get_most_important_token(phone_number):
     token = {}
     # TODO: validate phone number
-    CASE_SQL = '(case when status="ONCALL" then 1 when status="QUEUE" then 2 when status="BOOK" then 3 when status="SERVING" then 4 end)'
+    CASE_SQL = '(case when status="SERVING" then 1 when status="ONCALL" then 2 when status="QUEUE" then 3 when status="BOOK" then 4 end)'
     queues = Queue.objects.filter(Q(phone_number=phone_number, status=Queue.Status.QUEUE) 
         | Q(phone_number=phone_number, status=Queue.Status.BOOK)
         | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
@@ -385,6 +390,7 @@ def get_most_important_token(phone_number):
             'shop_name': queues[0].shop.name,
             'shop_id': queues[0].shop.id,
             'on_call': queues[0].status == Queue.Status.ONCALL,
+            'on_serving': queues[0].status == Queue.Status.SERVING,
             'status': {
                 Queue.Status.QUEUE: "Waiting",
                 Queue.Status.BOOK: "Booked",
@@ -406,14 +412,16 @@ def get_customer_status(shop_id, phone_number):
     """ 
     Return:
         Queue.Status, len(list_of_prior)
-    Note:
-        catch Queue.DoesNotExist 
     """
     shop = get_object_or_404(Shop, pk=shop_id)
-    my_queue = shop.queue_set.get(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
-        | Q(phone_number=phone_number, status=Queue.Status.BOOK)
-        | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
-        | Q(phone_number=phone_number, status=Queue.Status.SERVING))
+    try:
+        my_queue = shop.queue_set.get(Q(phone_number=phone_number, status=Queue.Status.QUEUE)
+            | Q(phone_number=phone_number, status=Queue.Status.BOOK)
+            | Q(phone_number=phone_number, status=Queue.Status.ONCALL)
+            | Q(phone_number=phone_number, status=Queue.Status.SERVING))
+    except Queue.DoesNotExist:
+        return None, 0
+
     queues = shop.queue_set.filter(queue_date__lt=my_queue.queue_date, status=Queue.Status.QUEUE)
     return my_queue.status, len(queues)
 

@@ -50,6 +50,10 @@
               <div class="row">
                 <button type="button" class="btn btn-outline-secondary" disabled>login with user account to join</button>
               </div>
+              {% elif status %}
+              <div class="row">
+                <button type="button" class="btn btn-outline-secondary" disabled>You already joined</button>
+              </div>
               {% else %}
                 <a href="{% url 'queue' shop.id %}" class="join-btn">Join</a>
               {% endif %}

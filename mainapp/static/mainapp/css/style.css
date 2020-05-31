@@ -738,10 +738,6 @@ html {
     color: rgba(0, 0, 0, 0.44);
 }
 
-.bg-red {
-    background-color: #FF6365;
-}
-
 .token-text {
     margin: 0;
     font-size: 18px;
@@ -770,6 +766,10 @@ html {
 
 .status-active {
     color: #1EDC1A;
+}
+
+.status-serving {
+    color: #1AA2DC;
 }
 
 .queue-active {
