@@ -57,14 +57,23 @@
                                 <a href="{% url 'login' %}" class="btn btn-link">
                                     Login
                                 </a>
+
+                                <a id="redirect-link" href="{% url 'login' %}" style="display: none;">Profile</a>
                             </div>
-                    </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     </div>
-
 </main>
+{% if success %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('redirect-link').click();
+    });
+</script>
+{% endif %}
+
 {% endblock %}

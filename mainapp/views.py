@@ -55,7 +55,10 @@ def register_view(request):
             user = User.objects.create_user(username, email, password)
             shop = Shop.objects.create(user=user)
             user.save()
-            context = {"message": "Account creation success!"}
+            context = {
+                "success": True,
+                "message": "Account creation success! Redirect to shop profile."
+                }
         else:
             context = {"message": "Invalid credentials."}
 

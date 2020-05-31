@@ -22,6 +22,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
+                    {% if user.username %}
                     <div class="card-header">User: {{ user }}</div>
                     <div class="card-body">
                         <form action="{% url  'shop_profile' %}" method="POST" enctype="multipart/form-data">
@@ -89,10 +90,13 @@
                         </div>
                     </form>
                 </div>
+                {% else %}
+                    <p>{{ message }}</p>
+                {% endif %}
             </div>
         </div>
     </div>
     </div>
-
 </main>
+
 {% endblock %}
