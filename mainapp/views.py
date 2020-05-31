@@ -284,7 +284,7 @@ def success_view(request, shop_id):
         return HttpResponseRedirect(reverse('shop', args=(shop_id,)))
 
 
-def reg_ph_view(request, ret):
+def register_phone_view(request, ret):
     try:
         phone_number = request.POST['phone_number']
     except KeyError:

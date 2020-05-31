@@ -11,7 +11,7 @@
         <div class="first-container">
             <img src="{% static 'mainapp/images/logo.png' %}" alt="Qbot logo">
             <a class="btn btn-primary btn-first-time" href="{% url 'register' %}">login as owner</a>
-            <a class="btn btn-outline-primary btn-first-time" href="{% url 'tokens' %}">login as user</a>
+            <a class="btn btn-outline-primary btn-first-time" href="{% url 'register_phone' '/' %}">login as user</a>
         </div>
     </div>
 {% endblock %}
