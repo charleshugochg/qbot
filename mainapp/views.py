@@ -109,10 +109,10 @@ def search_result(request):
     if not text:
         return redirect(ret)
     text = re.escape(text) # make sure there are not regex specials
-    if f == "byname":
-        shop = Shop.objects.filter(name__iregex=r"(^|\s)%s" % text)
-    else:
+    if f == "bytype":
         shop = Shop.objects.filter(shop_type__iregex=r"(^|\s)%s" % text)
+    else:
+        shop = Shop.objects.filter(name__iregex=r"(^|\s)%s" % text)
     context = {
         "shops": shop,
         "value": text,
