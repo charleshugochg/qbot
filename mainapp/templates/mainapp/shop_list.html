@@ -43,6 +43,7 @@
                 {% csrf_token %}
                 <div class="input-group mb-3">
                     <input type="text" name="search-value" class="form-control" placeholder="Shop search">
+                    <input type="text" name="filter" id="filter" value="{{ filt}}" style="display: none;">
                     <div class="input-group-append">
                     <button class="btn btn-outline-secondary" name="path" value="shop_list" type="submit">Find</button>
                     </div>
@@ -80,7 +81,26 @@
                 {% endfor %}
             </div>
         </div>
-        
     </div>
+
+    {% if filt == 'bytype' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('exampleRadios2').click();
+        });
+    </script>
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            filter = document.getElementById('filter');
+            document.getElementById('exampleRadios1').onclick = function() {
+                filter.value = "byname";
+            }
+            document.getElementById('exampleRadios2').onclick = function() {
+                filter.value = "bytype";
+            }
+        });
+    </script>
 
 {% endblock %}
