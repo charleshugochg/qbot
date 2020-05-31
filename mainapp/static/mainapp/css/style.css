@@ -706,6 +706,71 @@ html {
 /* ----------------- */
 /* token card css */
 /* ----------------- */
+.bd-10 {
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.token-container {
+    height: 100%;
+    position: relative;
+    background-color: #1AA2DC;
+    border-radius: 10px 0 0 10px;
+}
+  
+.token-vertical-center {
+    margin: 0;
+    color: #f6f6f6;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.token-label {
+    margin: 0;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 9px;
+    line-height: 12px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.44);
+}
+
+.bg-red {
+    background-color: #FF6365;
+}
+
+.token-text {
+    margin: 0;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    /* identical to box height */
+
+    color: #423D60;
+}
+
+.btn-cross {
+    border-radius: 0 10px 0 0;
+    position: absolute;
+    background-color: #DC1A1A;
+    top: 0;
+    right: 0;
+}
+
+#cross {
+    width: 2em;
+    height: 2em;
+    background: url(../images/cross.svg) 50% 50% no-repeat;
+    background-size: auto;
+}
+
+.status-active {
+    color: #1EDC1A;
+}
 
 .queue-active {
     background-color:rgb(0, 173, 121);
