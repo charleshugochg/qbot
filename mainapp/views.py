@@ -105,13 +105,18 @@ def shop_list(request):
 def search_result(request):
     text = request.POST.get("search-value")
     ret = request.POST.get("path") or 'index'
-    print(text, ret)
+    f = request.POST.get("filter")
     if not text:
         return redirect(ret)
     text = re.escape(text) # make sure there are not regex specials
+    if f == "byname":
+        shop = Shop.objects.filter(name__iregex=r"(^|\s)%s" % text)
+    else:
+        shop = Shop.objects.filter(shop_type__iregex=r"(^|\s)%s" % text)
     context = {
-        "shops": Shop.objects.filter(name__iregex=r"(^|\s)%s" % text),
+        "shops": shop,
         "value": text,
+        "filt": f,
         "return_path": ret
         }
     return render(request, "mainapp/search_result.html", context)

@@ -17,6 +17,24 @@
     <a href="{% url return_path %}"><i class="ion-ios-arrow-left back-btn"></i></a>
 {% endblock %}
 
+{% block options %}
+<div class="filter-div">
+    <p>Filters</p>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+        <label class="form-check-label" for="exampleRadios1">
+            By Shop Name
+        </label>
+        </div>
+        <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+        <label class="form-check-label" for="exampleRadios2">
+            By Shop Type
+        </label>
+    </div>
+</div>
+{% endblock %}
+
 {% block body %}
     <div class="container-custom no-gutters">
         <div class="search-area-shop-list">
@@ -24,6 +42,7 @@
                 {% csrf_token %}
                 <div class="input-group mb-3">
                     <input type="text" value="{{value}}" name="search-value" class="form-control" placeholder="Shop search">
+                    <input type="text" name="filter" id="filter" value="{{ filt }}" style="display: none;">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" name="path" value="shop_list" type="submit">Find</button>
                     </div>
@@ -61,7 +80,26 @@
                 {% endfor %}
             </div>
         </div>
-        
     </div>
+    
+    {% if filt == 'bytype' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('exampleRadios2').click();
+        });
+    </script>
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            filter = document.getElementById('filter');
+            document.getElementById('exampleRadios1').onclick = function() {
+                filter.value = "byname";
+            }
+            document.getElementById('exampleRadios2').onclick = function() {
+                filter.value = "bytype";
+            }
+        });
+    </script>
 
 {% endblock %}

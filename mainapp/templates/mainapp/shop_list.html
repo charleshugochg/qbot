@@ -43,6 +43,7 @@
                 {% csrf_token %}
                 <div class="input-group mb-3">
                     <input type="text" name="search-value" class="form-control" placeholder="Shop search">
+                    <input type="text" name="filter" id="filter" value="{{ filt}}" style="display: none;">
                     <div class="input-group-append">
                     <button class="btn btn-outline-secondary" name="path" value="shop_list" type="submit">Find</button>
                     </div>
@@ -61,7 +62,7 @@
                                 <img src="{{ MEDIA_URL }}{{ shop.logo.name }}" alt="Shop logo">
                                 <div class="shop-info-text">
                                     <a class="link-header" href="{% url 'shop' shop.id %}"><h4>{{shop.name}}</h4></a>
-                                    <p>{{shop.address}}</p>
+                                    <p><i class="location-icon ion-location"></i> {{shop.address}}</p>
                                     <p><span class="small-txt">Waiting Queues</span><span class="small-que-txt"> {{ shop.num_in_queue }}</span></p>
                                 </div>
                                 <div class="capacity-book">
@@ -82,7 +83,26 @@
                 {% endfor %}
             </div>
         </div>
-        
     </div>
+
+    {% if filt == 'bytype' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('exampleRadios2').click();
+        });
+    </script>
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            filter = document.getElementById('filter');
+            document.getElementById('exampleRadios1').onclick = function() {
+                filter.value = "byname";
+            }
+            document.getElementById('exampleRadios2').onclick = function() {
+                filter.value = "bytype";
+            }
+        });
+    </script>
 
 {% endblock %}

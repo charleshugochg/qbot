@@ -345,6 +345,11 @@ html {
     margin-bottom: 3px;
 }
 
+.location-icon {
+    font-size: 110%;
+    vertical-align: -0.05em;
+}
+
 .shop-info-text p {
     font-size: 90%;
     font-weight: 500;
