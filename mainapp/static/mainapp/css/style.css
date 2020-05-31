@@ -329,9 +329,10 @@ html {
 .shop-info-body img {
     display: inline-block;
     max-width: 100px;
+    min-width: 50px;
     width: 20%;
     float: left;
-    margin-top: 0px;
+    margin-top: 1%;
 }
 
 .shop-info-text {
@@ -341,7 +342,7 @@ html {
 }
 
 .shop-info-text h4 {
-    font-size: 140%;
+    font-size: 130%;
     font-weight: 400;
     margin-bottom: 3px;
 }
@@ -489,6 +490,7 @@ html {
 
 .inner-span {
     color: black;
+    font-size: 90%;
 }
 
 
@@ -506,7 +508,7 @@ html {
 
 .quebook-info h2 {
     margin-left: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     font-size: 120%;
 }
 
