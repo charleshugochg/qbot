@@ -1,7 +1,19 @@
-{% extends "mainapp/base.html" %}
+{% extends "mainapp/base_with_nav.html" %}
 
 {% block title %}
     Login
+{% endblock %}
+
+{% block pagehead %}
+    Login
+{% endblock %}
+
+{% block toggleicon %}
+  <i class="ion-ios-person custom-icon"></i>
+{% endblock %}
+
+{% block backlink %}
+    <a href="{% url 'register' %}"><i class="ion-ios-arrow-left back-btn"></i></a>
 {% endblock %}
 
 {% block body %}
@@ -10,7 +22,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Login</div>
+                    <!-- <div class="card-header">Login</div> -->
                     <div class="card-body">
                         <form action="{% url 'login' %}" method="POST">
                             {% csrf_token %}

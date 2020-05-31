@@ -17,18 +17,56 @@
 {% endblock %}
 
 {% block body %}
-<div class="container mt-3">
-    <form action="{% url 'register_phone' ret %}" method="POST">
-        <div class="form-row align-items-center">
-            {% csrf_token %}
-            <div class="col-auto">
-                <label class="sr-only" for="inlineFormInput">Phone Number</label>
-                <input name="phone_number" type="tel" class="form-control mb-2" id="inlineFormInput" placeholder="Enter phone number">
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+<main class="login-form">
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <!-- <div class="card-header">Register</div> -->
+                    <div class="card-body">
+                        <form action="{% url 'register_phone' ret %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="email_address" class="col-md-4 col-form-label text-md-right">Register</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="username" placeholder="Enter your phone number" class="form-control" name="phone_number" required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-4">
+                                    {% if message %}
+                                        {% if success %}
+                                        <div class="alert alert-success" role="alert">
+                                            {{ message }}
+                                        </div>
+                                        {% else %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ message }}
+                                        </div>
+                                        {% endif %}
+                                    {% endif %}
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="remember"> Remember Me
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+
+                                <a id="redirect-link" href="{% url 'login' %}" style="display: none;">Profile</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </form>
-</div>
+    </div>
+    </div>
+</main>
 {% endblock body %}
