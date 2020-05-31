@@ -375,8 +375,10 @@ def get_most_important_token(phone_number):
         )
     if queues:
         token = {
+            'id': queues[0].token_id,
             'queue_id': queues[0].id,
             'shop_name': queues[0].shop.name,
+            'shop_id': queues[0].shop.id,
             'on_call': queues[0].status == Queue.Status.ONCALL,
             'status': {
                 Queue.Status.QUEUE: "Waiting",

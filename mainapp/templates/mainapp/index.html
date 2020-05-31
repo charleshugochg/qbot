@@ -33,8 +33,37 @@
         {% else %}
 
             <!-- Here your card Charles -->
-
-            <div class="card-info">
+            <div class="card bd-10">
+                <div class="row">
+                    <div class="col-4 pr-0">
+                        <div class="token-container">
+                            <h3 class="token-vertical-center">QB{{ token.queue_id }}</h3>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mt-1">
+                            <label class="token-label">shop name</label>
+                            <p class="token-text">{{ token.shop_name }}</p>
+                        </div>
+                        <div class="mt-1">
+                            <label class="token-label">status</label>
+                            <p class="token-text {% if token.on_call %}status-active{% endif %}">{{ token.status }}</p>
+                        </div>
+                        <hr class="mt-2 mb-2">
+                        <div class="d-flex justify-content-between align-items-center mt-1 mb-2 pr-2">
+                            <div>
+                                <label class="token-label">token id</label>
+                                <p class="token-text">{{ token.id }}</p>
+                            </div>
+                            <a href="{% url 'qr_view' token.id %}" class="logo-qr mr-2"></a>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn-cross" href="{% url 'cancel' token.shop_id %}">
+                    <div id="cross"></div>
+                </a>
+            </div>
+            {% comment %} <div class="card-info">
                 <div class="queue-info {% if token.on_call %}queue-active{% endif %}">
                     <p class="queue-block main-color">Qbot Technology</p>
                     <p class="queue-block">Yangon</p>
@@ -43,7 +72,7 @@
                     <h4>Status: {{ token.status }}</h4>
                     <h4>Date: 12:30PM</h4>
                 </div>
-            </div>
+            </div> {% endcomment %}
         {% endif %}
 
         <div class="main-menu row no-gutters">
