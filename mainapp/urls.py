@@ -21,7 +21,7 @@ urlpatterns = [
     #ex: /tokens
     path("tokens/", views.tokens_view, name="tokens"),
     #ex: /regph
-    path("regph/ret=<path:ret>/", views.reg_ph_view, name="register_phone_number"),
+    path("register_phone/ret=<path:ret>/", views.register_phone_view, name="register_phone"),
     #ex: /success/1
     path("success/<int:shop_id>/", views.success_view, name="success"),
     #ex: /auth_token/

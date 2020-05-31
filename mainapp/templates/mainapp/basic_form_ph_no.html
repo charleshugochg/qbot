@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block toggleicon %}
-  <i class="ion-ios-chatboxes-outline custom-icon"></i>
+  <i class="ion-ios-telephone-outline custom-icon"></i>
 {% endblock %}
 
 {% block backlink %}
@@ -18,7 +18,7 @@
 
 {% block body %}
 <div class="container mt-3">
-    <form action="{% url 'register_phone_number' ret %}" method="POST">
+    <form action="{% url 'register_phone' ret %}" method="POST">
         <div class="form-row align-items-center">
             {% csrf_token %}
             <div class="col-auto">
