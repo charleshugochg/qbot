@@ -198,7 +198,6 @@ html {
 }
 
 .item-detail i{
-    padding-bottom: 2px;
     width: 80px;
     height: 80px;
     text-align: center;
@@ -208,7 +207,6 @@ html {
     margin-left: auto;
     margin-right: auto;
     margin-top: 5px;
-    padding-top: 4px;
     color: #fff;
 }
 
@@ -226,6 +224,10 @@ html {
 
 .item-color4 {
     background-color: rgb(86, 172, 179);
+}
+
+.item-color5 {
+    background-color: #abc2e8;
 }
 
 .item-detail p{
@@ -614,6 +616,10 @@ html {
 
     .filter-div {
         display: block;
+    }
+
+    .item-detail i{
+        padding-top: 3%;
     }
   }
 
