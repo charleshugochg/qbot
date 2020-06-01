@@ -37,6 +37,9 @@ class Shop(models.Model):
 #############################################################################
 # Don't come down Rio
 
+def generate_token():
+    return token_urlsafe(6)
+
 class Queue(models.Model):
     class Status(models.TextChoices):
         QUEUE = 'QUEUE'
@@ -50,7 +53,7 @@ class Queue(models.Model):
     queue_date = models.DateTimeField('datetime queue', default=timezone.now)
     phone_number = models.CharField(max_length=12, blank=True)
     arrival_time = models.DateTimeField('datetime arrival', blank=True, null=True, default=None)
-    token_id = models.CharField(max_length=12, default=token_urlsafe(6), editable=False)
+    token_id = models.CharField(max_length=12, default=generate_token, editable=False)
     status = models.CharField(max_length=10, choices=Status.choices)
 
     def __str__(self):
