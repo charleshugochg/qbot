@@ -760,6 +760,15 @@ html {
     color: rgba(0, 0, 0, 0.44);
 }
 
+.token-span {
+    margin: 0;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 9px;
+    line-height: 12px;
+    color: rgba(0, 0, 0, 0.44);
+}
+
 .token-text {
     margin: 0;
     font-size: 18px;

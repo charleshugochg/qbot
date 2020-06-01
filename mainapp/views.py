@@ -270,6 +270,7 @@ def tokens_view(request):
                 'shop_name': q.shop.name,
                 'shop_id': q.shop.id,
                 'queue_id': q.id,
+                'on_queue': q.status == Queue.Status.QUEUE,
                 'on_call': q.status == Queue.Status.ONCALL,
                 'on_serving': q.status == Queue.Status.SERVING,
                 'status': {
@@ -278,6 +279,7 @@ def tokens_view(request):
                     Queue.Status.ONCALL: "Calling",
                     Queue.Status.SERVING: "Serving",
                 }[q.status],
+                'num_priors': get_customer_status(q.shop.id, phone_number)[1]
             }
             for q in queues
         ]
@@ -390,6 +392,7 @@ def get_most_important_token(phone_number):
             'queue_id': queues[0].id,
             'shop_name': queues[0].shop.name,
             'shop_id': queues[0].shop.id,
+            'on_queue': queues[0].status == Queue.Status.QUEUE,
             'on_call': queues[0].status == Queue.Status.ONCALL,
             'on_serving': queues[0].status == Queue.Status.SERVING,
             'status': {
@@ -397,7 +400,8 @@ def get_most_important_token(phone_number):
                 Queue.Status.BOOK: "Booked",
                 Queue.Status.ONCALL: "Calling",
                 Queue.Status.SERVING: "Serving",
-            }[queues[0].status]
+            }[queues[0].status],
+            'num_priors': get_customer_status(queues[0].shop.id, phone_number)[1]
         }
     return token
 

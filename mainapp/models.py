@@ -50,7 +50,7 @@ class Queue(models.Model):
     queue_date = models.DateTimeField('datetime queue', default=timezone.now)
     phone_number = models.CharField(max_length=12, blank=True)
     arrival_time = models.DateTimeField('datetime arrival', blank=True, null=True, default=None)
-    token_id = models.CharField(max_length=12, default=token_urlsafe(8), editable=False)
+    token_id = models.CharField(max_length=12, default=token_urlsafe(6), editable=False)
     status = models.CharField(max_length=10, choices=Status.choices)
 
     def __str__(self):

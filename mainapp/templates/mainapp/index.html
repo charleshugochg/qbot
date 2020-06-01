@@ -48,7 +48,11 @@
                         </div>
                         <div class="mt-1">
                             <label class="token-label">status</label>
-                            <p class="token-text {% if token.on_call %}status-active{% elif token.on_serving %}status-serving{% endif %}">{{ token.status }}</p>
+                            <p class="token-text {% if token.on_call %}status-active{% elif token.on_serving %}status-serving{% endif %}">{{ token.status }}
+                            {% if token.on_queue %}
+                            <span class="token-span"><span class="main-color" style="font-size:18px;">{{ token.num_priors }} </span> people ahead of you</span>
+                            {% endif %}
+                            </p>
                         </div>
                         <hr class="mt-2 mb-2">
                         <div class="d-flex justify-content-between align-items-center mt-1 mb-2 pr-2">
